@@ -4,6 +4,7 @@ import os
 from ColorArray import ColorArray
 from ExcelArtist import ExcelArtist
 from ShellArtist import ShellArtist
+from HtmlArtist import HtmlArtist
 
 
 def make_parser():
@@ -35,6 +36,9 @@ def prompt():
 
     shell_artist = ShellArtist(filename)
     shell_artist.draw(color_array)
+
+    html_artist = HtmlArtist(filename)
+    html_artist.draw(color_array)
     print("ended.")
 
 prompt()
