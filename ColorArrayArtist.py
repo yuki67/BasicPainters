@@ -29,7 +29,7 @@ class ColorArrayArtist(object):
     def put_pixel(self, rgb):
         """
         座標(self.x, self.y)をrgbの色で塗る。
-        描かれる準場は
+        描かれる順番は
         (0,0)->(0,1)->...->(0,n)->
         (1,0)->(1,1)->...->(1,n)->
         .................->(m,n)
