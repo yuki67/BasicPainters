@@ -24,7 +24,6 @@ class ExcelArtist(ColorArrayArtist):
                 letter = openpyxl.utils.get_column_letter(x + 1)
                 sheet.column_dimensions[letter].width = self.cell_size / 11.07
             # pylint: enable=maybe-no-member
-        return
 
     def put_pixel(self, rgb):
         key = openpyxl.utils.get_column_letter(self.x + 1) + str(self.y + 1)
