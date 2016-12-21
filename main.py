@@ -3,6 +3,7 @@ import argparse
 import os
 from ColorArray import ColorArray
 from ExcelArtist import ExcelArtist
+from ShellArtist import ShellArtist
 
 
 def make_parser():
@@ -21,11 +22,17 @@ def prompt():
     対話処理など
     """
     arg = make_parser().parse_args()
-    filename = os.path.splitext(arg.filename)[0] + ".xlsx"
-    artist = ExcelArtist(filename)
+
     array = ColorArray()
-    color_array = array.load_image(arg.filename, 100)
-    artist.draw(color_array)
+    color_array = array.load_image(arg.filename, 10)
+
+    filename = os.path.splitext(arg.filename)[0]
+
+    excel_artist = ExcelArtist(filename)
+    excel_artist.draw(color_array)
+
+    shell_artist = ShellArtist(filename)
+    shell_artist.draw(color_array)
     print("ended.")
 
 prompt()
