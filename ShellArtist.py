@@ -1,4 +1,3 @@
-import openpyxl
 from ColorArrayArtist import ColorArrayArtist
 
 
