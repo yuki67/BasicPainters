@@ -10,7 +10,7 @@ class ExcelArtist(ColorArrayArtist):
     def __init__(self, filename, cell_size=10):
         super().__init__()
         self.cell_size = cell_size
-        self.filename = filename
+        self.filename = filename + ".xlsx"
         self.x = 0
         self.y = 0
 
