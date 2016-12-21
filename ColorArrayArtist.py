@@ -7,8 +7,6 @@ class ColorArrayArtist(object):
 
     def __init__(self):
         self.file = None
-        self.x = 0
-        self.y = 0
 
     def draw(self, color_array):
         """
@@ -16,11 +14,8 @@ class ColorArrayArtist(object):
         """
         self.open(color_array)
         for x_array in color_array:
-            self.x = 0
             for rgb in x_array:
                 self.put_pixel(rgb)
-                self.x += 1
-            self.y += 1
             self.new_line()
         self.close()
 
@@ -34,7 +29,7 @@ class ColorArrayArtist(object):
     def put_pixel(self, rgb):
         """
         座標(self.x, self.y)をrgbの色で塗る。
-        描く座標はself.x, self.yで参照できるが、描かれる準場は
+        描かれる準場は
         (0,0)->(0,1)->...->(0,n)->
         (1,0)->(1,1)->...->(1,n)->
         .................->(m,n)

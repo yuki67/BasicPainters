@@ -11,6 +11,8 @@ class ExcelArtist(ColorArrayArtist):
         super().__init__()
         self.cell_size = cell_size
         self.filename = filename
+        self.x = 0
+        self.y = 0
 
     def open(self, color_array):
         self.file = openpyxl.Workbook()
@@ -28,9 +30,11 @@ class ExcelArtist(ColorArrayArtist):
         key = openpyxl.utils.get_column_letter(self.x + 1) + str(self.y + 1)
         self.file.active[key].fill = openpyxl.styles.PatternFill(
             patternType='solid', fgColor=self.x11_from_rgb(rgb))
+        self.x += 1
 
     def new_line(self):
-        pass
+        self.x = 0
+        self.y += 1
 
     def close(self):
         self.file.save(filename=self.filename)
