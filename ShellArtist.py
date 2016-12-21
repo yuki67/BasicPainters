@@ -32,23 +32,22 @@ class ShellArtist(ColorArrayArtist):
 
     def clamp(self, val):
         """valをPallet_Numsの一番近い値に潰す。"""
-        r = len(ShellArtist.Pallet_Nums) - 1
-        l = 0
-        while True:
-            if abs(r - l) == 1:
-                r_val = ShellArtist.Pallet_Nums[r]
-                l_val = ShellArtist.Pallet_Nums[l]
-                if abs(r_val - val) < abs(l_val - val):
-                    return r_val
+        if val < 155:
+            if val < 120:
+                if val < 42:
+                    return 0
                 else:
-                    return l_val
-            center = int((r + l) / 2)
-            if val < ShellArtist.Pallet_Nums[center]:
-                r = center
-            elif val == ShellArtist.Pallet_Nums[center]:
-                return val
+                    return 95
             else:
-                l = center
+                return 135
+        else:
+            if val < 195:
+                return 135
+            else:
+                if val < 235:
+                    return 215
+                else:
+                    return 255
 
     Pallet_Nums = [0, 95, 135, 175, 215, 255]
 
