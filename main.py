@@ -14,6 +14,8 @@ def make_parser():
     parser = argparse.ArgumentParser(description="Make excel from image.")
     parser.add_argument(dest="filename", action="store",
                         help="Configure path to the image.")
+    parser.add_argument("-n", dest="width", default=50, action="store",
+                        help="Configure the width of generationg image.")
     return parser
 
 
@@ -24,7 +26,7 @@ def prompt():
     arg = make_parser().parse_args()
 
     array = ColorArray()
-    color_array = array.load_image(arg.filename, 10)
+    color_array = array.load_image(arg.filename, int(arg.width))
 
     filename = os.path.splitext(arg.filename)[0]
 
