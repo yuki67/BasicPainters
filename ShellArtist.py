@@ -13,7 +13,7 @@ class ShellArtist(ColorArrayArtist):
     def open(self, color_array):
         self.file = open(self.filename, "w+")
         self.file.write("#!/bin/bash\n")
-        self.file.write("echo -e \"")
+        self.file.write("echo -e $'")
         return
 
     def put_pixel(self, rgb):
@@ -23,10 +23,11 @@ class ShellArtist(ColorArrayArtist):
         self.file.write("\\e[48;5;%sm  " % ShellArtist.Color_Pallet[(r, g, b)])
 
     def new_line(self):
-        self.file.write("\\e[48;5;0m\\n")
+        self.file.write("\\e[48;5;231m     \\n")
 
     def close(self):
-        self.file.write("\\e[48;5;0m\"")
+        self.file.write("\\e[38;5;0m\\em")
+        self.file.write("\\e[48;5;231m\\em'")
         self.file.close()
 
     def clamp(self, val):
