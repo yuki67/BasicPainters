@@ -1,7 +1,12 @@
 __pycache__
+/#*\#
+*~
 *.pyc
 *.jpg
 *.xlsx
 *.sh
 *.png
 *.html
+*.py
+*.gif
+
