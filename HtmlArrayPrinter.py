@@ -1,7 +1,7 @@
-from ColorArrayArtist import ColorArrayArtist
+from ColorArrayPrinter import ColorArrayPrinter
 
 
-class HtmlArtist(ColorArrayArtist):
+class HtmlArrayPrinter(ColorArrayPrinter):
     """
     HTMLでお絵かきするためのクラス
     """

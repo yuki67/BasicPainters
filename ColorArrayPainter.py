@@ -1,7 +1,7 @@
 from PIL import Image
 
 
-class ColorArray(list):
+class ColorArrayPainter(list):
     """
     色配列を作ったりいじったりするためのクラス。
     """
@@ -33,7 +33,7 @@ class ColorArray(list):
 
         x = 0
         y = 0
-        array = ColorArray()
+        array = ColorArrayPainter()
         while y <= original_height:
             array.append([])
             x = 0

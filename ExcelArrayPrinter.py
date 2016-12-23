@@ -1,8 +1,8 @@
 import openpyxl
-from ColorArrayArtist import ColorArrayArtist
+from ColorArrayPrinter import ColorArrayPrinter
 
 
-class ExcelArtist(ColorArrayArtist):
+class ExcelArrayPrinter(ColorArrayPrinter):
     """
     エクセルでお絵かきするためのクラス
     """

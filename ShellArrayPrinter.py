@@ -1,7 +1,7 @@
-from ColorArrayArtist import ColorArrayArtist
+from ColorArrayPrinter import ColorArrayPrinter
 
 
-class ShellArtist(ColorArrayArtist):
+class ShellArrayPrinter(ColorArrayPrinter):
     """
     シェルでお絵かきするためのクラス
     """
@@ -20,7 +20,7 @@ class ShellArtist(ColorArrayArtist):
         r = self.clamp(rgb[0])
         g = self.clamp(rgb[1])
         b = self.clamp(rgb[2])
-        self.file.write("\\e[48;5;%sm  " % ShellArtist.Color_Pallet[(r, g, b)])
+        self.file.write("\\e[48;5;%sm  " % ShellArrayPrinter.Color_Pallet[(r, g, b)])
 
     def new_line(self):
         self.file.write("\\e[48;5;231m     \\n")

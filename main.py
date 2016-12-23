@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import argparse
 import os
-from ColorArray import ColorArray
-from ExcelArtist import ExcelArtist
-from ShellArtist import ShellArtist
-from HtmlArtist import HtmlArtist
+from ColorArrayPainter import ColorArrayPainter
+from ExcelArrayPrinter import ExcelArrayPrinter
+from ShellArrayPrinter import ShellArrayPrinter
+from HtmlArrayPrinter import HtmlArrayPrinter
 
 
 def make_parser():
@@ -26,7 +26,7 @@ def prompt():
     """
     arg = make_parser().parse_args()
 
-    array = ColorArray.load_image(arg.filename, int(arg.width))
+    array = ColorArrayPainter.load_image(arg.filename, int(arg.width))
 
     filename = os.path.splitext(arg.filename)[0]
 
@@ -34,14 +34,14 @@ def prompt():
         for x in range(0, array.width, 5):
             array.put_pixel(x, y, (255, 0, 0))
     
-    excel_artist = ExcelArtist(filename)
-    excel_artist.draw(color_array)
+    # excel_printer = ExcelArrayPrinter(filename)
+    # excel_printer.draw(array)
 
-    shell_artist = ShellArtist(filename)
-    shell_artist.draw(color_array)
+    shell_printer = ShellArrayPrinter(filename)
+    shell_printer.draw(array)
 
-    html_artist = HtmlArtist(filename)
-    html_artist.draw(array)
+    html_printer = HtmlArrayPrinter(filename)
+    html_printer.draw(array)
     print("ended.")
 
 prompt()

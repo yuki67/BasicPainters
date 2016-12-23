@@ -1,8 +1,8 @@
-class ColorArrayArtist(object):
+class ColorArrayPrinter(object):
     """
     色配列を描画するための基底クラス。
     このクラスを継承していくつかの関数をオーバーライドすれば、
-    色配列でお絵かきができるようになる。
+    色配列を表示できるようになる。
     """
 
     def __init__(self):
