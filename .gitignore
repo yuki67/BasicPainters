@@ -8,4 +8,5 @@ __pycache__
 *.png
 *.html
 *.gif
-
+.DS_Store
+._.DS_Store
