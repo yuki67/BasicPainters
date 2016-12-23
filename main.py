@@ -26,11 +26,14 @@ def prompt():
     """
     arg = make_parser().parse_args()
 
-    array = ColorArray()
-    color_array = array.load_image(arg.filename, int(arg.width))
+    array = ColorArray.load_image(arg.filename, int(arg.width))
 
     filename = os.path.splitext(arg.filename)[0]
 
+    for y in range(0, array.height, 5):
+        for x in range(0, array.width, 5):
+            array.put_pixel(x, y, (255, 0, 0))
+    
     excel_artist = ExcelArtist(filename)
     excel_artist.draw(color_array)
 
@@ -38,7 +41,7 @@ def prompt():
     shell_artist.draw(color_array)
 
     html_artist = HtmlArtist(filename)
-    html_artist.draw(color_array)
+    html_artist.draw(array)
     print("ended.")
 
 prompt()
