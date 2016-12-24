@@ -33,9 +33,9 @@ def prompt():
     for y in range(0, array.height, 5):
         for x in range(0, array.width, 5):
             array.put_pixel(x, y, (255, 0, 0))
-    
-    # excel_printer = ExcelArrayPrinter(filename)
-    # excel_printer.draw(array)
+
+    excel_printer = ExcelArrayPrinter(filename)
+    excel_printer.draw(array)
 
     shell_printer = ShellArrayPrinter(filename)
     shell_printer.draw(array)
