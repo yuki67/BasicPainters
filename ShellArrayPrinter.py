@@ -17,20 +17,27 @@ class ShellArrayPrinter(ColorArrayPrinter):
         return
 
     def put_pixel(self, rgb):
-        r = self.clamp(rgb[0])
-        g = self.clamp(rgb[1])
-        b = self.clamp(rgb[2])
-        self.file.write("\\e[48;5;%sm  " % ShellArrayPrinter.Color_Pallet[(r, g, b)])
+        color_code = ShellArrayPrinter.color_code_from_rgb(rgb)
+        self.file.write("\\e[48;5;%dm  " % color_code)
 
     def new_line(self):
-        self.file.write("\\e[48;5;231m     \\n")
+        self.file.write("\\e[48;5;231m\\n")
 
     def close(self):
-        self.file.write("\\e[38;5;0m\\em")
-        self.file.write("\\e[48;5;231m\\em'")
+        self.file.write("\\e[m\\em")
+        self.file.write("\\e[m\\em'")
         self.file.close()
 
-    def clamp(self, val):
+    @staticmethod
+    def color_code_from_rgb(rgb):
+        """rgbに対応するシェルのカラーコードを返す。"""
+        r = ShellArrayPrinter.truncate(rgb[0])
+        g = ShellArrayPrinter.truncate(rgb[1])
+        b = ShellArrayPrinter.truncate(rgb[2])
+        return ShellArrayPrinter.Color_Pallet[(r, g, b)]
+
+    @staticmethod
+    def truncate(val):
         """valをPallet_Numsの一番近い値に潰す。"""
         if val < 155:
             if val < 120:
