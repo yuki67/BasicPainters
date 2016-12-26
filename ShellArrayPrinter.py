@@ -9,23 +9,24 @@ class ShellArrayPrinter(ColorArrayPrinter):
     def __init__(self, filename):
         super().__init__()
         self.filename = filename + ".sh"
+        self.str = ""
 
     def open(self, color_array):
-        self.file = open(self.filename, "w+")
-        self.file.write("#!/bin/bash\n")
-        self.file.write("echo -e $'")
+        self.str += "#!/bin/bash\necho -e $'"
         return
 
     def put_pixel(self, rgb):
         color_code = ShellArrayPrinter.color_code_from_rgb(rgb)
-        self.file.write("\\e[48;5;%dm  " % color_code)
+        self.str += "\\e[48;5;%dm  " % color_code
 
     def new_line(self):
-        self.file.write("\\e[48;5;231m\\n")
+        self.str += "\\e[48;5;231m\\n"
 
     def close(self):
-        self.file.write("\\e[m\\em")
-        self.file.write("\\e[m\\em'")
+        self.str += "\\e[m\\em"
+        self.str += "\\e[m\\em'"
+        self.file = open(self.filename, "w+")
+        self.file.write(self.str)
         self.file.close()
 
     @staticmethod

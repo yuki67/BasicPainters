@@ -11,25 +11,27 @@ class HtmlArrayPrinter(ColorArrayPrinter):
         self.cell_width = None
         self.cell_height = None
         self.filename = filename + ".html"
+        self.str = ""
 
     def open(self, color_array):
         self.cell_width = int(100 / len(color_array[0]))  # パーセント
         self.cell_height = int(100 / len(color_array))  # パーセント
-        self.file = open(self.filename, "w+")
-        self.file.write("<html>\n" +
-                        "<head><title>" + self.filename[:-5] + "</title></head>\n" +
-                        "<body><table width=\"100%%\" height=\"100%%\ border=\"0\" cellspacing=\"0\" >\n" +
-                        "<tr>\n")
+        self.str += "<html>\n" + \
+            "<head><title>" + self.filename[:-5] + "</title></head>\n" + \
+            "<body><table width=\"100%%\" height=\"100%%\ border=\"0\" cellspacing=\"0\" >\n" + \
+            "<tr>\n"
 
     def put_pixel(self, rgb):
-        self.file.write("<th bgcolor=\"%s\" width=\"%s%%\" height=\"%s%%\"></th>" %
-                        (self.color_code_from_rgb(rgb), self.cell_width, self.cell_width))
+        self.str += "<th bgcolor=\"%s\" width=\"%s%%\" height=\"%s%%\"></th>" % \
+            (self.color_code_from_rgb(rgb), self.cell_height, self.cell_width)
 
     def new_line(self):
-        self.file.write("</tr>\n<tr>")
+        self.str += "</tr>\n<tr>"
 
     def close(self):
-        self.file.write("</body></html>")
+        self.str += "</body></html>"
+        self.file = open(self.filename, "w+")
+        self.file.write(self.str)
         self.file.close()
 
     @staticmethod
