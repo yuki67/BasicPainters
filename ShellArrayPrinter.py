@@ -25,9 +25,9 @@ class ShellArrayPrinter(ColorArrayPrinter):
     def close(self):
         self.str += "\\e[m\\em"
         self.str += "\\e[m\\em'"
-        self.file = open(self.filename, "w+")
-        self.file.write(self.str)
-        self.file.close()
+        file = open(self.filename, "w+")
+        file.write(self.str)
+        file.close()
 
     @staticmethod
     def color_code_from_rgb(rgb):

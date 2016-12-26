@@ -5,9 +5,6 @@ class ColorArrayPrinter(object):
     色配列を表示できるようになる。
     """
 
-    def __init__(self):
-        self.file = None
-
     def draw(self, color_array):
         """
         color_arrayを使って絵を描く。

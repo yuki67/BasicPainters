@@ -30,9 +30,9 @@ class HtmlArrayPrinter(ColorArrayPrinter):
 
     def close(self):
         self.str += "</body></html>"
-        self.file = open(self.filename, "w+")
-        self.file.write(self.str)
-        self.file.close()
+        file = open(self.filename, "w+")
+        file.write(self.str)
+        file.close()
 
     @staticmethod
     def color_code_from_rgb(rgb):
