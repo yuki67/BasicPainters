@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import argparse
 import os
+from Figure import Point, Line, Circle
+from ColorArray import ColorArray
 from ColorArrayPainter import ColorArrayPainter
 from ExcelArrayPrinter import ExcelArrayPrinter
 from ShellArrayPrinter import ShellArrayPrinter
@@ -25,23 +27,30 @@ def prompt():
     対話処理など
     """
     arg = make_parser().parse_args()
+    painter = ColorArrayPainter()
 
-    array = ColorArrayPainter.load_image(arg.filename, int(arg.width))
-
+    array = ColorArray(100, 100)
+    # array = ColorArray.load_image(arg.filename, arg.width)
     filename = os.path.splitext(arg.filename)[0]
 
-    for y in range(0, array.height, 5):
-        for x in range(0, array.width, 5):
-            array.put_pixel(x, y, (255, 0, 0))
+    p = [Point(0, 0, [0, 0, 0]),
+         Point(99, 0, [255, 255, 0]),
+         Point(99, 99, [255, 0, 255]),
+         Point(0, 99, [0, 255, 255])]
 
-    excel_printer = ExcelArrayPrinter(filename)
-    excel_printer.draw(array)
+    painter.draw(array, Line(p[0], p[1]))
+    painter.draw(array, Line(p[1], p[2]))
+    painter.draw(array, Line(p[2], p[3]))
+    painter.draw(array, Line(p[3], p[0]))
+    painter.draw(array, Line(p[0], p[2]))
+    painter.draw(array, Line(p[1], p[3]))
 
-    shell_printer = ShellArrayPrinter(filename)
-    shell_printer.draw(array)
+    circle = Circle(Point(50, 50, [0, 255, 0]), 50)
+    painter.draw(array, circle)
 
-    html_printer = HtmlArrayPrinter(filename)
-    html_printer.draw(array)
+    ExcelArrayPrinter(filename).print(array)
+    ShellArrayPrinter(filename).print(array)
+    HtmlArrayPrinter(filename).print(array)
     print("ended.")
 
 prompt()
