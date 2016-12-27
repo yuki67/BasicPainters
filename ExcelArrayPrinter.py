@@ -18,6 +18,7 @@ class ExcelArrayPrinter(ColorArrayPrinter):
         self.file = openpyxl.Workbook()
         sheet = self.file.active
         for y in range(len(color_array)):
+            # 同じ名前の変数と関数がopenpyxlにある。遺憾だ!
             # pylint: disable=maybe-no-member
             sheet.row_dimensions[y + 1].height = self.cell_size / 2
             for x in range(len(color_array[0])):
@@ -42,8 +43,7 @@ class ExcelArrayPrinter(ColorArrayPrinter):
     def x11_from_rgb(rgb):
         """
         色のRGB表記(R, G, B)をX11表記(#ARGB)に直す
-        r,g,bは0から255
-        aは255で固定
+        aはffで固定
         """
         r_str = hex(rgb[0])[2:].rjust(2, '0')
         g_str = hex(rgb[1])[2:].rjust(2, '0')

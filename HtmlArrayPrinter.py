@@ -14,16 +14,14 @@ class HtmlArrayPrinter(ColorArrayPrinter):
         self.str = ""
 
     def open(self, color_array):
-        self.cell_width = int(100 / len(color_array[0]))  # パーセント
-        self.cell_height = int(100 / len(color_array))  # パーセント
         self.str += "<html>\n" + \
             "<head><title>" + self.filename[:-5] + "</title></head>\n" + \
-            "<body><table width=\"100%%\" height=\"100%%\ border=\"0\" cellspacing=\"0\" >\n" + \
+            "<body><table width=\"10%\" height=\"10\" border=\"0\" cellspacing=\"0\" >\n" + \
             "<tr>\n"
 
     def put_pixel(self, rgb):
-        self.str += "<th bgcolor=\"%s\" width=\"%s%%\" height=\"%s%%\"></th>" % \
-            (self.color_code_from_rgb(rgb), self.cell_height, self.cell_width)
+        self.str += "<th bgcolor=\"%s\"/>" % \
+            (self.color_code_from_rgb(rgb))
 
     def new_line(self):
         self.str += "</tr>\n<tr>"
@@ -38,7 +36,6 @@ class HtmlArrayPrinter(ColorArrayPrinter):
     def color_code_from_rgb(rgb):
         """
         色のRGB表記(R, G, B)をX11表記(#RGB)に直す
-        r,g,bは0から255
         """
         r_str = hex(rgb[0])[2:].rjust(2, '0')
         g_str = hex(rgb[1])[2:].rjust(2, '0')
