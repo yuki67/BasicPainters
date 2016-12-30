@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import argparse
 import os
+import tkinter
 from Figure import Point, Line, Circle
 import ColorArray
+from TkPainter import TkPainter
 from ColorArrayPainter import ColorArrayPainter
 from ExcelArrayPrinter import ExcelArrayPrinter
 from ShellArrayPrinter import ShellArrayPrinter
@@ -70,13 +72,40 @@ def test_image(args):
     print("image test ended.")
 
 
+def test_tk(args):
+    root = None
+    root = tkinter.Tk()
+    root.title("Tk Painter")
+    root.geometry("%dx%d+%d+%d" % (512, 512, 256, 0))
+    canvas = tkinter.Canvas(root, width=512, height=512)
+    p = [Point(0, 0, [0, 0, 0]),
+         Point(args.width, 0, [255, 255, 0]),
+         Point(args.width, args.width, [255, 0, 255]),
+         Point(0, args.width, [0, 255, 255])]
+
+    painter = TkPainter()
+    painter.draw(canvas, Line(p[0], p[1]))
+    painter.draw(canvas, Line(p[1], p[2]))
+    painter.draw(canvas, Line(p[2], p[3]))
+    painter.draw(canvas, Line(p[3], p[0]))
+    painter.draw(canvas, Line(p[0], p[2]))
+    painter.draw(canvas, Line(p[1], p[3]))
+
+    circle = Circle(Point(args.width / 2, args.width /
+                          2, [0, 255, 0]), args.width / 2)
+    painter.draw(canvas, circle)
+    canvas.place(x=0, y=0)
+    root.mainloop()
+
+
 def prompt():
     """
     対話処理など
     """
     args = make_parser().parse_args()
-    test_figure(args)
-    test_image(args)
+    # test_figure(args)
+    # test_image(args)
+    test_tk(args)
     print("program ended.")
 
 prompt()
