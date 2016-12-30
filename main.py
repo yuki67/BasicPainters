@@ -73,15 +73,16 @@ def test_image(args):
 
 
 def test_tk(args):
-    root = None
+    width = 512
+    height = 512
     root = tkinter.Tk()
     root.title("Tk Painter")
-    root.geometry("%dx%d+%d+%d" % (512, 512, 256, 0))
-    canvas = tkinter.Canvas(root, width=512, height=512)
+    root.geometry("%dx%d+%d+%d" % (width, height, 256, 0))
+    canvas = tkinter.Canvas(root, width=width, height=height)
     p = [Point(0, 0, [0, 0, 0]),
-         Point(args.width, 0, [255, 255, 0]),
-         Point(args.width, args.width, [255, 0, 255]),
-         Point(0, args.width, [0, 255, 255])]
+         Point(width - 1, 0, [255, 255, 0]),
+         Point(width - 1, height - 1, [255, 0, 255]),
+         Point(0, height - 1, [0, 255, 255])]
 
     painter = TkPainter()
     painter.draw(canvas, Line(p[0], p[1]))
@@ -91,8 +92,7 @@ def test_tk(args):
     painter.draw(canvas, Line(p[0], p[2]))
     painter.draw(canvas, Line(p[1], p[3]))
 
-    circle = Circle(Point(args.width / 2, args.width /
-                          2, [0, 255, 0]), args.width / 2)
+    circle = Circle(Point(width / 2, height / 2, [0, 255, 0]), args.width / 2)
     painter.draw(canvas, circle)
     canvas.place(x=0, y=0)
     root.mainloop()
