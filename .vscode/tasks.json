@@ -10,7 +10,7 @@
         "tasks": [
             {
                 "taskName": "run python in new window",
-                "isBuildCommand": true,
+                "isTestCommand": true,
                 "args": [
                     "start", 
                     "powershell -c", 
@@ -21,7 +21,7 @@
             },
             {
                 "taskName": "run python in integrated window",
-                "isTestCommand": true,
+                "isBuildCommand": true,
                 "args": [
                     "C:/Users/iiyuk/Documents/virtualenv/defaultglobal/Scripts/python.exe",
                     "main.py",
