@@ -56,9 +56,10 @@ class Line(Figure):
         self.b = b
 
     def get_points(self):
+        winner = int(max(abs(self.a.x - self.b.x), abs(self.a.y - self.b.y)))
         ans = []
-        for i in range(100):
-            ans.append(Point.interpolate(self.a, self. b, i / 100))
+        for i in range(winner):
+            ans.append(Point.interpolate(self.a, self. b, i / winner))
         return ans
 
 
