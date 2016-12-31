@@ -88,11 +88,11 @@ class Ellipse(Figure):
         self.center = center
         self.a = a
         self.b = b
+        self.c = (a**2 + b**2)**-0.5
 
     def get_points(self):
         ans = []
-        c = 1 / 2 ** 0.5
-        for x in range(0, ceil(self.a * c)):
+        for x in range(0, ceil(self.c * self.a ** 2)):
             y = self.b * (1 - (x / self.a)**2)**0.5
             ans.append(Point(self.center.x + x,
                              self.center.y + y,
@@ -106,7 +106,7 @@ class Ellipse(Figure):
             ans.append(Point(self.center.x - x,
                              self.center.y - y,
                              self.center.rgb))
-        for y in range(0, ceil(self.b * c)):
+        for y in range(0, ceil(self.c * self.b ** 2)):
             x = self.a * (1 - (y / self.b)**2)**0.5
             ans.append(Point(self.center.x + x,
                              self.center.y + y,
