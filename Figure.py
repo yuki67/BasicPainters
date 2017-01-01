@@ -1,5 +1,5 @@
 from math import ceil, floor, pi, sin, cos
-import itertools
+from itertools import chain
 
 
 def circular_points(center, r, n, color=lambda t: [0, 0, 0]):
@@ -75,7 +75,7 @@ class Polygon(Figure):
         self.stopper = len(points)
 
     def __iter__(self):
-        return itertools.chain(*(Line(self.points[i - 1], self.points[i]) for i in range(self.stopper)))
+        return chain(*(Line(self.points[i - 1], self.points[i]) for i in range(self.stopper)))
 
 
 class Ellipse(Figure):
@@ -88,39 +88,28 @@ class Ellipse(Figure):
         self.center = center
         self.a = a
         self.b = b
-        self.c = (a**2 + b**2)**-0.5
+        self.x_range = ceil((a**2 + b**2)**-0.5 * a ** 2)
+        self.y_range = ceil((a**2 + b**2)**-0.5 * b ** 2)
+        self.y = lambda x: b * (1 - (x / a)**2)**0.5
+        self.x = lambda y: a * (1 - (y / b)**2)**0.5
 
-    def get_points(self):
-        ans = []
-        for x in range(0, ceil(self.c * self.a ** 2)):
-            y = self.b * (1 - (x / self.a)**2)**0.5
-            ans.append(Point(self.center.x + x,
-                             self.center.y + y,
-                             self.center.rgb))
-            ans.append(Point(self.center.x + x,
-                             self.center.y - y,
-                             self.center.rgb))
-            ans.append(Point(self.center.x - x,
-                             self.center.y + y,
-                             self.center.rgb))
-            ans.append(Point(self.center.x - x,
-                             self.center.y - y,
-                             self.center.rgb))
-        for y in range(0, ceil(self.c * self.b ** 2)):
-            x = self.a * (1 - (y / self.b)**2)**0.5
-            ans.append(Point(self.center.x + x,
-                             self.center.y + y,
-                             self.center.rgb))
-            ans.append(Point(self.center.x + x,
-                             self.center.y - y,
-                             self.center.rgb))
-            ans.append(Point(self.center.x - x,
-                             self.center.y + y,
-                             self.center.rgb))
-            ans.append(Point(self.center.x - x,
-                             self.center.y - y,
-                             self.center.rgb))
-        return ans
+    def __iter__(self):
+        return chain((Point(self.center.x + x,
+                            self.center.y + self.y(x),
+                            self.center.rgb)
+                      for x in range(-self.x_range, self.x_range)),
+                     (Point(self.center.x + x,
+                            self.center.y - self.y(x),
+                            self.center.rgb)
+                      for x in range(-self.x_range, self.x_range)),
+                     (Point(self.center.x + self.x(y),
+                            self.center.y + y,
+                            self.center.rgb)
+                      for y in range(-self.y_range, self.y_range)),
+                     (Point(self.center.x - self.x(y),
+                            self.center.y + y,
+                            self.center.rgb)
+                      for y in range(-self.y_range, self.y_range)))
 
 
 class Circle(Ellipse):
@@ -141,4 +130,4 @@ class Diamond(Figure):
         self.circle = lambda: circular_points(center, r, n, color)
 
     def __iter__(self):
-        return itertools.chain(*(Line(p, q) for p in self.circle() for q in self.circle()))
+        return chain(*(Line(p, q) for p in self.circle() for q in self.circle()))
