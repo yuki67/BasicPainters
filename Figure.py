@@ -1,4 +1,14 @@
 from math import ceil, floor, pi, sin, cos
+import itertools
+
+
+def circular_points(center, r, n, color=lambda t: [0, 0, 0]):
+    """
+    円周上の点へのイテレータを返す
+    """
+    return (Point(r * cos(2 * pi * i / n) + center.x,
+                  r * sin(2 * pi * i / n) + center.y,
+                  color(i / n)) for i in range(n))
 
 
 class Point(object):
@@ -38,12 +48,7 @@ class Figure(object):
     """
     図形の基底クラス
     """
-
-    def get_points(self):
-        """
-        図形の表す点が詰まったリストを返す
-        """
-        assert False, "Override me!"
+    pass
 
 
 class Line(Figure):
@@ -54,13 +59,10 @@ class Line(Figure):
     def __init__(self, a, b):
         self.a = a
         self.b = b
+        self.stopper = max(abs(self.a.x - self.b.x), abs(self.a.y - self.b.y))
 
-    def get_points(self):
-        winner = max(abs(self.a.x - self.b.x), abs(self.a.y - self.b.y))
-        ans = []
-        for i in range(int(winner)):
-            ans.append(Point.interpolate(self.a, self. b, i / winner))
-        return ans
+    def __iter__(self):
+        return (Point.interpolate(self.a, self.b, i / self.stopper) for i in range(int(self.stopper)))
 
 
 class Polygon(Figure):
@@ -70,12 +72,10 @@ class Polygon(Figure):
 
     def __init__(self, points):
         self.points = points
+        self.stopper = len(points)
 
-    def get_points(self):
-        ans = []
-        for i in range(len(self.points)):
-            ans += Line(self.points[i - 1], self.points[i]).get_points()
-        return ans
+    def __iter__(self):
+        return itertools.chain(*(Line(self.points[i - 1], self.points[i]) for i in range(self.stopper)))
 
 
 class Ellipse(Figure):
@@ -123,27 +123,6 @@ class Ellipse(Figure):
         return ans
 
 
-class CirclularPoints(Figure):
-    """
-    円周上の点
-    """
-
-    def __init__(self, center, r, n, color=lambda t: [0, 0, 0]):
-        self.center = center
-        self.r = r
-        self.color = color
-        self.n = n
-
-    def get_points(self):
-        ans = []
-        for i in range(self.n):
-            t = i / self.n
-            ans.append(Point(self.r * cos(2 * pi * t) + self.center.x,
-                             self.r * sin(2 * pi * t) + self.center.y,
-                             self.color(t)))
-        return ans
-
-
 class Circle(Ellipse):
     """
     円
@@ -154,18 +133,12 @@ class Circle(Ellipse):
 
 
 class Diamond(Figure):
+    """
+    ダイヤモンドパターン
+    """
 
     def __init__(self, center, r, n, color=lambda t: [0, 0, 0]):
-        self.center = center
-        self.r = r
-        self.n = n
-        self.color = color
+        self.circle = lambda: circular_points(center, r, n, color)
 
-    def get_points(self):
-        ans = []
-        circle = CirclularPoints(
-            self.center, self.r, self.n, self.color).get_points()
-        for p in circle:
-            for q in circle:
-                ans += Line(p, q).get_points()
-        return ans
+    def __iter__(self):
+        return itertools.chain(*(Line(p, q) for p in self.circle() for q in self.circle()))
