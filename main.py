@@ -2,7 +2,8 @@
 import argparse
 import os
 import tkinter
-from Figure import Point, Line, Circle, Ellipse
+from math import sin, cos, pi
+from Figure import Point, Line, Circle, Ellipse, Diamond
 import ColorArray
 from TkPainter import TkPainter
 from ColorArrayPainter import ColorArrayPainter
@@ -101,6 +102,13 @@ def test_tk(args):
     painter.draw(canvas, Ellipse(center, width / 4, width / 2))
     center.rgb = [255, 0, 0]
     painter.draw(canvas, Ellipse(center, width / 2, width / 4))
+
+    painter.draw(canvas,
+                 Diamond(center,
+                         width / 2, 16,
+                         lambda t: [128 + 127 * sin(2 * pi * t),
+                                    128 + 127 * cos(2 * pi * t),
+                                    128 + 127 * sin(2 * pi * t) * cos(2 * pi * t)]),)
     canvas.place(x=5, y=5)
     root.mainloop()
 

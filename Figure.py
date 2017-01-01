@@ -1,4 +1,4 @@
-from math import ceil, floor
+from math import ceil, floor, pi, sin, cos
 
 
 class Point(object):
@@ -123,6 +123,27 @@ class Ellipse(Figure):
         return ans
 
 
+class CirclularPoints(Figure):
+    """
+    円周上の点
+    """
+
+    def __init__(self, center, r, n, color=lambda t: [0, 0, 0]):
+        self.center = center
+        self.r = r
+        self.color = color
+        self.n = n
+
+    def get_points(self):
+        ans = []
+        for i in range(self.n):
+            t = i / self.n
+            ans.append(Point(self.r * cos(2 * pi * t) + self.center.x,
+                             self.r * sin(2 * pi * t) + self.center.y,
+                             self.color(t)))
+        return ans
+
+
 class Circle(Ellipse):
     """
     円
@@ -130,3 +151,21 @@ class Circle(Ellipse):
 
     def __init__(self, center, r):
         super().__init__(center, r, r)
+
+
+class Diamond(Figure):
+
+    def __init__(self, center, r, n, color=lambda t: [0, 0, 0]):
+        self.center = center
+        self.r = r
+        self.n = n
+        self.color = color
+
+    def get_points(self):
+        ans = []
+        circle = CirclularPoints(
+            self.center, self.r, self.n, self.color).get_points()
+        for p in circle:
+            for q in circle:
+                ans += Line(p, q).get_points()
+        return ans
