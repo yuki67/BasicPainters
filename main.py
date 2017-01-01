@@ -3,7 +3,7 @@ import argparse
 import os
 import tkinter
 from math import sin, cos, pi
-from Figure import Point, Line, Circle, Ellipse, Diamond
+from Figure import Point, Line, Circle, Ellipse, Diamond, Polygon
 import ColorArray
 from TkPainter import TkPainter
 from ColorArrayPainter import ColorArrayPainter
@@ -89,13 +89,16 @@ def test_tk(args):
          Point(1, height - 1, [0, 255, 255])]
 
     painter = TkPainter()
-    painter.draw(canvas, Line(p[0], p[1]))
-    painter.draw(canvas, Line(p[1], p[2]))
-    painter.draw(canvas, Line(p[2], p[3]))
-    painter.draw(canvas, Line(p[3], p[0]))
+    """
+    Line, Polygon
+    """
+    painter.draw(canvas, Polygon(p))
     painter.draw(canvas, Line(p[0], p[2]))
     painter.draw(canvas, Line(p[1], p[3]))
 
+    """
+    Eillipe,Circle
+    """
     center = Point(width / 2, height / 2, [0, 255, 0])
     painter.draw(canvas, Circle(center, width / 4))
     center.rgb = [0, 0, 255]
@@ -103,6 +106,9 @@ def test_tk(args):
     center.rgb = [255, 0, 0]
     painter.draw(canvas, Ellipse(center, width / 2, width / 4))
 
+    """
+    Diamond
+    """
     painter.draw(canvas,
                  Diamond(center,
                          width / 2, 16,
