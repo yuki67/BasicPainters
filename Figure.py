@@ -1,4 +1,4 @@
-from math import sin, cos
+from math import ceil, floor, pi, sin, cos
 
 
 class Point(object):
@@ -56,9 +56,10 @@ class Line(Figure):
         self.b = b
 
     def get_points(self):
+        winner = max(abs(self.a.x - self.b.x), abs(self.a.y - self.b.y))
         ans = []
-        for i in range(100):
-            ans.append(Point.interpolate(self.a, self. b, i / 100))
+        for i in range(int(winner)):
+            ans.append(Point.interpolate(self.a, self. b, i / winner))
         return ans
 
 
@@ -77,20 +78,70 @@ class Polygon(Figure):
         return ans
 
 
-class Ellipse(Polygon):
+class Ellipse(Figure):
     """
     楕円
     """
 
     def __init__(self, center, a, b):
         # 全体の色はcenter.rgbで指定される
-        points = []
-        for i in range(0, 64):
-            t = 2 * 3.14159 / 64 * i
-            points.append(Point(a * cos(t) + center.x,
-                                b * sin(t) + center.y,
-                                center.rgb))
-        super().__init__(points)
+        self.center = center
+        self.a = a
+        self.b = b
+        self.c = (a**2 + b**2)**-0.5
+
+    def get_points(self):
+        ans = []
+        for x in range(0, ceil(self.c * self.a ** 2)):
+            y = self.b * (1 - (x / self.a)**2)**0.5
+            ans.append(Point(self.center.x + x,
+                             self.center.y + y,
+                             self.center.rgb))
+            ans.append(Point(self.center.x + x,
+                             self.center.y - y,
+                             self.center.rgb))
+            ans.append(Point(self.center.x - x,
+                             self.center.y + y,
+                             self.center.rgb))
+            ans.append(Point(self.center.x - x,
+                             self.center.y - y,
+                             self.center.rgb))
+        for y in range(0, ceil(self.c * self.b ** 2)):
+            x = self.a * (1 - (y / self.b)**2)**0.5
+            ans.append(Point(self.center.x + x,
+                             self.center.y + y,
+                             self.center.rgb))
+            ans.append(Point(self.center.x + x,
+                             self.center.y - y,
+                             self.center.rgb))
+            ans.append(Point(self.center.x - x,
+                             self.center.y + y,
+                             self.center.rgb))
+            ans.append(Point(self.center.x - x,
+                             self.center.y - y,
+                             self.center.rgb))
+        return ans
+
+
+class CirclularPoints(Figure):
+    """
+    円周上の点
+    """
+
+    def __init__(self, center, r, n, color=lambda t: [0, 0, 0]):
+        self.center = center
+        self.r = r
+        self.color = color
+        self.n = n
+
+    def get_points(self):
+        ans = []
+        for i in range(self.n):
+            t = i / self.n
+            ans.append(Point(self.r * cos(2 * pi * t) + self.center.x,
+                             self.r * sin(2 * pi * t) + self.center.y,
+                             self.color(t)))
+        return ans
 
 
 class Circle(Ellipse):
@@ -100,3 +151,21 @@ class Circle(Ellipse):
 
     def __init__(self, center, r):
         super().__init__(center, r, r)
+
+
+class Diamond(Figure):
+
+    def __init__(self, center, r, n, color=lambda t: [0, 0, 0]):
+        self.center = center
+        self.r = r
+        self.n = n
+        self.color = color
+
+    def get_points(self):
+        ans = []
+        circle = CirclularPoints(
+            self.center, self.r, self.n, self.color).get_points()
+        for p in circle:
+            for q in circle:
+                ans += Line(p, q).get_points()
+        return ans

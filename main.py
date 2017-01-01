@@ -2,7 +2,8 @@
 import argparse
 import os
 import tkinter
-from Figure import Point, Line, Circle
+from math import sin, cos, pi
+from Figure import Point, Line, Circle, Ellipse, Diamond
 import ColorArray
 from TkPainter import TkPainter
 from ColorArrayPainter import ColorArrayPainter
@@ -73,16 +74,19 @@ def test_image(args):
 
 
 def test_tk(args):
+    """
+    tkinterで絵を描く
+    """
     width = 512
     height = 512
     root = tkinter.Tk()
     root.title("Tk Painter")
-    root.geometry("%dx%d+%d+%d" % (width, height, 256, 0))
+    root.geometry("%dx%d+%d+%d" % (width + 10, height + 10, 256, 0))
     canvas = tkinter.Canvas(root, width=width, height=height)
-    p = [Point(0, 0, [0, 0, 0]),
-         Point(width - 1, 0, [255, 255, 0]),
+    p = [Point(1, 1, [0, 0, 0]),
+         Point(width - 1, 1, [255, 255, 0]),
          Point(width - 1, height - 1, [255, 0, 255]),
-         Point(0, height - 1, [0, 255, 255])]
+         Point(1, height - 1, [0, 255, 255])]
 
     painter = TkPainter()
     painter.draw(canvas, Line(p[0], p[1]))
@@ -92,9 +96,20 @@ def test_tk(args):
     painter.draw(canvas, Line(p[0], p[2]))
     painter.draw(canvas, Line(p[1], p[3]))
 
-    circle = Circle(Point(width / 2, height / 2, [0, 255, 0]), args.width / 2)
-    painter.draw(canvas, circle)
-    canvas.place(x=0, y=0)
+    center = Point(width / 2, height / 2, [0, 255, 0])
+    painter.draw(canvas, Circle(center, width / 4))
+    center.rgb = [0, 0, 255]
+    painter.draw(canvas, Ellipse(center, width / 4, width / 2))
+    center.rgb = [255, 0, 0]
+    painter.draw(canvas, Ellipse(center, width / 2, width / 4))
+
+    painter.draw(canvas,
+                 Diamond(center,
+                         width / 2, 16,
+                         lambda t: [128 + 127 * sin(2 * pi * t),
+                                    128 + 127 * cos(2 * pi * t),
+                                    128 + 127 * sin(2 * pi * t) * cos(2 * pi * t)]),)
+    canvas.place(x=5, y=5)
     root.mainloop()
 
 
