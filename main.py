@@ -25,35 +25,6 @@ def make_parser():
     return parser
 
 
-def test_figure(args):
-    """
-    図形描画のテスト
-    """
-    painter = ColorArrayPainter()
-    array = ColorArray.blank_colorarray(args.width, args.width)
-
-    p = [Point(0, 0, [0, 0, 0]),
-         Point(args.width, 0, [255, 255, 0]),
-         Point(args.width, args.width, [255, 0, 255]),
-         Point(0, args.width, [0, 255, 255])]
-
-    painter.draw(array, Line(p[0], p[1]))
-    painter.draw(array, Line(p[1], p[2]))
-    painter.draw(array, Line(p[2], p[3]))
-    painter.draw(array, Line(p[3], p[0]))
-    painter.draw(array, Line(p[0], p[2]))
-    painter.draw(array, Line(p[1], p[3]))
-
-    circle = Circle(Point(args.width / 2, args.width /
-                          2, [0, 255, 0]), args.width / 2)
-    painter.draw(array, circle)
-
-    ExcelArrayPrinter("figure").print(array)
-    ShellArrayPrinter("figure").print(array)
-    HtmlArrayPrinter("figure").print(array)
-    print("figure test ended.")
-
-
 def test_image(args):
     """
     画像をロードする関数のテスト
@@ -73,22 +44,15 @@ def test_image(args):
     print("image test ended.")
 
 
-def test_tk(args):
+def test_figure(canvas, painter):
     """
-    tkinterで絵を描く
+    図形描画のテスト
     """
-    width = 512
-    height = 512
-    root = tkinter.Tk()
-    root.title("Tk Painter")
-    root.geometry("%dx%d+%d+%d" % (width + 10, height + 10, 256, 0))
-    canvas = tkinter.Canvas(root, width=width, height=height)
     p = [Point(1, 1, [0, 0, 0]),
-         Point(width - 1, 1, [255, 255, 0]),
-         Point(width - 1, height - 1, [255, 0, 255]),
-         Point(1, height - 1, [0, 255, 255])]
-
-    painter = TkPainter()
+         Point(canvas.width - 1, 1, [255, 255, 0]),
+         Point(canvas.width - 1,
+               canvas.height - 1, [255, 0, 255]),
+         Point(1, canvas.height - 1, [0, 255, 255])]
     """
     Line, Polygon
     """
@@ -99,24 +63,39 @@ def test_tk(args):
     """
     Eillipe,Circle
     """
-    center = Point(width / 2, height / 2, [0, 255, 0])
-    painter.draw(canvas, Circle(center, width / 4))
+    center = Point(canvas.width / 2,
+                   canvas.height / 2, [0, 255, 0])
+    painter.draw(canvas, Circle(center, canvas.width / 4))
     center.rgb = [0, 0, 255]
-    painter.draw(canvas, Ellipse(center, width / 4, width / 2))
+    painter.draw(canvas, Ellipse(
+        center, canvas.width / 4, canvas.width / 2))
     center.rgb = [255, 0, 0]
-    painter.draw(canvas, Ellipse(center, width / 2, width / 4))
+    painter.draw(canvas, Ellipse(
+        center, canvas.width / 2, canvas.width / 4))
 
     """
     Diamond
     """
     painter.draw(canvas,
                  Diamond(center,
-                         width / 2, 16,
+                         canvas.width / 2, 16,
                          lambda t: [128 + 127 * sin(2 * pi * t),
                                     128 + 127 * cos(2 * pi * t),
                                     128 + 127 * sin(2 * pi * t) * cos(2 * pi * t)]),)
     canvas.place(x=5, y=5)
-    root.mainloop()
+
+
+def setup_tk(width, height):
+    """
+    Tkのrootとcanvsを作って返す
+    """
+    root = tkinter.Tk()
+    root.title("Tk Painter")
+    root.geometry("%dx%d+%d+%d" % (width + 10, height + 10, 256, 0))
+    canvas = tkinter.Canvas(root, width=width, height=height)
+    canvas.width = width
+    canvas.height = height
+    return root, canvas
 
 
 def prompt():
@@ -124,9 +103,15 @@ def prompt():
     対話処理など
     """
     args = make_parser().parse_args()
+
+    """
+    TkPainter
+    """
+    root, canvas = setup_tk(512, 512)
+    test_figure(canvas, TkPainter())
+    root.mainloop()
     # test_figure(args)
     # test_image(args)
-    test_tk(args)
     print("program ended.")
 
 prompt()
