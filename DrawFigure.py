@@ -24,7 +24,7 @@ def test_figure(canvas, painter, width, height):
     painter.draw(canvas, Line(p[0], p[2]))
     painter.draw(canvas, Line(p[1], p[3]))
 
-    # Eillipe,Circle
+    # Ellipse,Circle
     center = Point(width / 2,
                    height / 2, [0, 255, 0])
     painter.draw(canvas, Circle(center, width / 4))
@@ -52,7 +52,7 @@ def draw_array_printer(array, filename):
 
 
 def setup_tk(width, height):
-    """ Tkのrootとcanvsを作って返す """
+    """ Tkのrootとcanvasを作って返す """
     root = tkinter.Tk()
     root.title("Tk Painter")
     root.geometry("%dx%d+%d+%d" % (width + 10, height + 10, 256, 0))

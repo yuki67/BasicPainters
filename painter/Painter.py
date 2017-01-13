@@ -4,7 +4,9 @@ from Figure import Point
 class Painter(object):
 
     def __init__(self):
-        self.shortcuts = {
+        # shortcutsで描画に使う関数を指定する
+        # 何も指定しなければ、すべて点で描画される(遅い)
+        self.draw_functions = {
             Point: self.put_pixel
         }
 
