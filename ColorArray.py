@@ -3,7 +3,7 @@
 """
 
 
-def blank_colorarray(height, width):
+def colorarray_blank(height, width):
     """
     [255, 255, 255](白)に初期化された横width, 縦heightの色配列を返す
     """
@@ -15,14 +15,14 @@ def blank_colorarray(height, width):
     return array
 
 
-def change_size(array, width):
+def colorarray_resize(array, width):
     """
-    arrayを幅widthに縮小(or拡大)して返す
+    arrayを幅widthに縮小して返す
     """
     return from_source(width, len(array[0]), len(array), lambda x, y: array[int(y)][int(x)])
 
 
-def load_image(filename, width):
+def colorarray_load_image(filename, width):
     """
     画像から色配列を作って返す
     widthは出来上がる色配列の幅

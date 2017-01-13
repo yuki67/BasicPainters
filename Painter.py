@@ -10,5 +10,5 @@ class Painter(object):
         """
         canvasにfigureを描く
         """
-        for p in figure.get_points():
+        for p in figure:
             self.put_pixel(canvas, p)
