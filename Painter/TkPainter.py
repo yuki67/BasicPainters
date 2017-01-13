@@ -1,5 +1,3 @@
-import tkinter
-from Figure import Line
 from Painter.Painter import Painter
 
 

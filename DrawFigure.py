@@ -2,13 +2,14 @@
 import os
 import tkinter
 from math import cos, pi, sin
+
 from ColorArray.ColorArray import colorarray_blank
 from ColorArray.ExcelArrayPrinter import ExcelArrayPrinter
 from ColorArray.HtmlArrayPrinter import HtmlArrayPrinter
 from ColorArray.ShellArrayPrinter import ShellArrayPrinter
-from Figure import Circle, Diamond, Ellipse, Line, Point, Polygon
 from Painter.ColorArrayPainter import ColorArrayPainter
 from Painter.TkPainter import TkPainter
+from Painter.Figure import Circle, Diamond, Ellipse, Line, Point, Polygon
 
 
 def test_figure(canvas, painter, width, height):
