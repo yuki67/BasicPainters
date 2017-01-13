@@ -1,12 +1,8 @@
 class ColorArrayPrinter(object):
-    """
-    色配列を描画するための基底クラス
-    """
+    """ 色配列を描画するための基底クラス """
 
     def print(self, color_array):
-        """
-        color_arrayを使って絵を描く
-        """
+        """ color_arrayを使って絵を描く """
         self.open(color_array)
         for x_array in color_array:
             for rgb in x_array:

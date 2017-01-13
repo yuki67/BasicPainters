@@ -1,12 +1,8 @@
-"""
-二次元の色配列をいじるための関数
-"""
+""" 二次元の色配列をいじるための関数 """
 
 
 def colorarray_blank(height, width):
-    """
-    [255, 255, 255](白)に初期化された横width, 縦heightの色配列を返す
-    """
+    """ [255, 255, 255](白)に初期化された横width, 縦heightの色配列を返す """
     array = []
     for _ in range(height):
         array.append([])
@@ -16,9 +12,7 @@ def colorarray_blank(height, width):
 
 
 def colorarray_resize(array, width):
-    """
-    arrayを幅widthに縮小して返す
-    """
+    """ arrayを幅widthに縮小して返す """
     return from_source(width, len(array[0]), len(array), lambda x, y: array[int(y)][int(x)])
 
 

@@ -3,9 +3,7 @@ from ColorArrayPrinter import ColorArrayPrinter
 
 
 class ExcelArrayPrinter(ColorArrayPrinter):
-    """
-    エクセルでお絵かきするためのクラス
-    """
+    """ エクセルでお絵かきするためのクラス """
 
     def __init__(self, filename, cell_size=10):
         super().__init__()

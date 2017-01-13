@@ -2,9 +2,7 @@ from ColorArrayPrinter import ColorArrayPrinter
 
 
 class ShellArrayPrinter(ColorArrayPrinter):
-    """
-    シェルでお絵かきするためのクラス
-    """
+    """ シェルでお絵かきするためのクラス """
 
     def __init__(self, filename):
         super().__init__()
@@ -31,7 +29,7 @@ class ShellArrayPrinter(ColorArrayPrinter):
 
     @staticmethod
     def color_code_from_rgb(rgb):
-        """rgbに対応するシェルのカラーコードを返す。"""
+        """ rgbに対応するシェルのカラーコードを返す """
         r = ShellArrayPrinter.truncate(rgb[0])
         g = ShellArrayPrinter.truncate(rgb[1])
         b = ShellArrayPrinter.truncate(rgb[2])
@@ -39,7 +37,7 @@ class ShellArrayPrinter(ColorArrayPrinter):
 
     @staticmethod
     def truncate(val):
-        """valをPallet_Numsの一番近い値に潰す。"""
+        """ valをPallet_Numsの一番近い値に潰す """
         if val < 155:
             if val < 120:
                 if val < 42:

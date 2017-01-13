@@ -2,9 +2,7 @@ from Painter import Painter
 
 
 class ColorArrayPainter(Painter):
-    """
-    色配列を作ったりいじったりするためのクラス
-    """
+    """ 色配列を作ったりいじったりするためのクラス """
 
     def put_pixel(self, canvas, point):
         """
