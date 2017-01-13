@@ -1,6 +1,6 @@
-from Painter import Painter
-from Figure import Line
 import tkinter
+from Figure import Line
+from Painter.Painter import Painter
 
 
 class TkPainter(Painter):

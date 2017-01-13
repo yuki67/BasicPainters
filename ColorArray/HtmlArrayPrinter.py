@@ -1,4 +1,4 @@
-from ColorArrayPrinter import ColorArrayPrinter
+from ColorArray.ColorArrayPrinter import ColorArrayPrinter
 
 
 class HtmlArrayPrinter(ColorArrayPrinter):

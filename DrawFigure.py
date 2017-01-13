@@ -2,14 +2,14 @@
 import argparse
 import os
 import tkinter
-from math import sin, cos, pi
-from Figure import Point, Line, Circle, Ellipse, Diamond, Polygon
-from ColorArray import colorarray_blank
-from TkPainter import TkPainter
-from ColorArrayPainter import ColorArrayPainter
-from ExcelArrayPrinter import ExcelArrayPrinter
-from ShellArrayPrinter import ShellArrayPrinter
-from HtmlArrayPrinter import HtmlArrayPrinter
+from math import cos, pi, sin
+from ColorArray.ColorArray import colorarray_blank
+from ColorArray.ExcelArrayPrinter import ExcelArrayPrinter
+from ColorArray.HtmlArrayPrinter import HtmlArrayPrinter
+from ColorArray.ShellArrayPrinter import ShellArrayPrinter
+from Figure import Circle, Diamond, Ellipse, Line, Point, Polygon
+from Painter.ColorArrayPainter import ColorArrayPainter
+from Painter.TkPainter import TkPainter
 
 
 def test_figure(canvas, painter, width, height):
@@ -69,9 +69,9 @@ def prompt():
     canvas = colorarray_blank(width, height)
     test_figure(canvas, ColorArrayPainter(), width, height)
 
-    if not os.path.exists(os.path.join("demo", "figures")):
-        os.mkdir(os.path.join("demo", "figures"))
-    draw_array_printer(canvas, os.path.join("demo", "figures", "figure"))
+    if not os.path.exists("figures"):
+        os.mkdir("figures")
+    draw_array_printer(canvas, os.path.join("figures", "figure"))
 
     # TkPainter
     width, height = 512, 512

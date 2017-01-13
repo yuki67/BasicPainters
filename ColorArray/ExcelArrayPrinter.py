@@ -1,5 +1,5 @@
 import openpyxl
-from ColorArrayPrinter import ColorArrayPrinter
+from ColorArray.ColorArrayPrinter import ColorArrayPrinter
 
 
 class ExcelArrayPrinter(ColorArrayPrinter):

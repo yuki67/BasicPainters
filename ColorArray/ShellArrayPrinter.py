@@ -1,4 +1,4 @@
-from ColorArrayPrinter import ColorArrayPrinter
+from ColorArray.ColorArrayPrinter import ColorArrayPrinter
 
 
 class ShellArrayPrinter(ColorArrayPrinter):

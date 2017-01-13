@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import argparse
 import os
-from ColorArray import colorarray_load_image, colorarray_resize
-from ExcelArrayPrinter import ExcelArrayPrinter
-from ShellArrayPrinter import ShellArrayPrinter
-from HtmlArrayPrinter import HtmlArrayPrinter
+from ColorArray.ColorArray import colorarray_load_image, colorarray_resize
+from ColorArray.ExcelArrayPrinter import ExcelArrayPrinter
+from ColorArray.HtmlArrayPrinter import HtmlArrayPrinter
+from ColorArray.ShellArrayPrinter import ShellArrayPrinter
 
 
 def make_parser():
@@ -27,9 +27,9 @@ def prompt():
     array = colorarray_load_image(args.filename, args.width)
 
     filename = os.path.join(
-        "demo", "images", os.path.basename(args.filename).split(".")[0])
-    if not os.path.exists(os.path.join("demo", "images")):
-        os.mkdir(os.path.join("demo", "images"))
+        "images", os.path.basename(args.filename).split(".")[0])
+    if not os.path.exists("images"):
+        os.mkdir("images")
     ExcelArrayPrinter(filename).print(array)
     ShellArrayPrinter(filename).print(array)
     HtmlArrayPrinter(filename).print(array)

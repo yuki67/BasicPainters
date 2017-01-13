@@ -1,4 +1,4 @@
-from Painter import Painter
+from Painter.Painter import Painter
 
 
 class ColorArrayPainter(Painter):
