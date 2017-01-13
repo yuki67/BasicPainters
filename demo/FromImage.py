@@ -23,9 +23,13 @@ def make_parser():
 def prompt():
     """ メイン処理 """
     args = make_parser().parse_args()
+
     array = colorarray_load_image(args.filename, args.width)
 
-    filename = os.path.splitext(args.filename)[0]
+    filename = os.path.join(
+        "demo", "images", os.path.basename(args.filename).split(".")[0])
+    if not os.path.exists(os.path.join("demo", "images")):
+        os.mkdir(os.path.join("demo", "images"))
     ExcelArrayPrinter(filename).print(array)
     ShellArrayPrinter(filename).print(array)
     HtmlArrayPrinter(filename).print(array)

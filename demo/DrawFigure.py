@@ -69,9 +69,9 @@ def prompt():
     canvas = colorarray_blank(width, height)
     test_figure(canvas, ColorArrayPainter(), width, height)
 
-    if not os.path.exists("./figures"):
-        os.mkdir("figures")
-    draw_array_printer(canvas, os.path.join("figures", "figure"))
+    if not os.path.exists(os.path.join("demo", "figures")):
+        os.mkdir(os.path.join("demo", "figures"))
+    draw_array_printer(canvas, os.path.join("demo", "figures", "figure"))
 
     # TkPainter
     width, height = 512, 512
