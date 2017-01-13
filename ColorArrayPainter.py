@@ -4,6 +4,9 @@ from Painter import Painter
 class ColorArrayPainter(Painter):
     """ 色配列を作ったりいじったりするためのクラス """
 
+    def __init__(self):
+        super().__init__()
+
     def put_pixel(self, canvas, point):
         """
         座標(x, y)の色をrgbにする

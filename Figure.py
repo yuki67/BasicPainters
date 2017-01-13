@@ -63,7 +63,7 @@ class Polygon(Figure):
         self.stopper = len(points)
 
     def __iter__(self):
-        return chain(*(Line(self.points[i - 1], self.points[i]) for i in range(self.stopper)))
+        return (Line(self.points[i - 1], self.points[i]) for i in range(self.stopper))
 
 
 class Ellipse(Figure):
@@ -112,4 +112,4 @@ class Diamond(Figure):
         self.circle = lambda: circular_points(center, r, n, color)
 
     def __iter__(self):
-        return chain(*(Line(p, q) for p in self.circle() for q in self.circle()))
+        return (Line(p, q) for p in self.circle() for q in self.circle())

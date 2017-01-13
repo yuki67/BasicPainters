@@ -1,8 +1,17 @@
 from Painter import Painter
+from Figure import Line
 import tkinter
 
 
 class TkPainter(Painter):
+
+    def __init__(self):
+        super().__init__()
+        # self.shortcuts[Line] = self.draw_line
+
+    def draw_line(self, canvas, line):
+        canvas.create_line(
+            [line.a.x, line.a.y, line.b.x, line.b.y], fill="red")
 
     def put_pixel(self, canvas, point):
         x = point.x
