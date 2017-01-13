@@ -15,7 +15,7 @@
                     "start", 
                     "powershell -c", 
                     "C:/Users/iiyuk/Documents/virtualenv/defaultglobal/Scripts/python.exe",
-                    "main.py",
+                    "${file}",
                     "hokusai.jpg"
                 ]
             },
@@ -24,7 +24,7 @@
                 "isBuildCommand": true,
                 "args": [
                     "C:/Users/iiyuk/Documents/virtualenv/defaultglobal/Scripts/python.exe",
-                    "main.py",
+                    "${file}",
                     "hokusai.jpg"
                 ]
             }
