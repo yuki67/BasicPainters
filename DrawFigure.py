@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import argparse
 import os
 import tkinter
 from math import cos, pi, sin

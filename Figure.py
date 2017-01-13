@@ -1,4 +1,4 @@
-from math import ceil, floor, pi, sin, cos
+from math import ceil, pi, sin, cos
 from itertools import chain
 
 
