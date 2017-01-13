@@ -17,7 +17,7 @@ class Painter(object):
     def draw(self, canvas, figure):
         """ canvasにfigureを描く """
         try:
-            self.shortcuts[type(figure)](canvas, figure)
+            self.draw_functions[type(figure)](canvas, figure)
         except KeyError:
             for p in figure:
                 self.draw(canvas, p)

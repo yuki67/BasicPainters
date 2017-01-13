@@ -4,10 +4,11 @@ from Painter.Painter import Painter
 
 
 class TkPainter(Painter):
+    """ TkinterのCanvas用のPainter """
 
     def __init__(self):
         super().__init__()
-        # self.shortcuts[Line] = self.draw_line
+        # self.draw_functions[Line] = self.draw_line
 
     def draw_line(self, canvas, line):
         canvas.create_line(
