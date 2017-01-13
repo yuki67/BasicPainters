@@ -21,7 +21,7 @@ def make_parser():
     parser.add_argument(dest="filename", action="store",
                         help="Configure path to the image.")
     parser.add_argument("-n", dest="width", default=200, action="store",
-                        help="Configure the width of generationg image.")
+                        help="Configure the width of generating image.")
     return parser
 
 
@@ -37,9 +37,9 @@ def test_image(args):
     HtmlArrayPrinter(filename).print(array)
 
     array = colorarray_load_image(array, 100)
-    HtmlArrayPrinter(filename + "_resized").print(array)
-    ExcelArrayPrinter(filename + "_resized").print(array)
-    ShellArrayPrinter(filename + "_resized").print(array)
+    HtmlArrayPrinter(filename + "_resize").print(array)
+    ExcelArrayPrinter(filename + "_resize").print(array)
+    ShellArrayPrinter(filename + "_resize").print(array)
 
     print("image test ended.")
 
@@ -61,7 +61,7 @@ def test_figure(canvas, painter, width, height):
     painter.draw(canvas, Line(p[1], p[3]))
 
     """
-    Eillipe,Circle
+    Ellipse,Circle
     """
     center = Point(width / 2,
                    height / 2, [0, 255, 0])
@@ -92,7 +92,7 @@ def test_array_printer(canvas, filename):
 
 def setup_tk(width, height):
     """
-    Tkのrootとcanvsを作って返す
+    Tkのrootとcanvasを作って返す
     """
     root = tkinter.Tk()
     root.title("Tk Painter")
