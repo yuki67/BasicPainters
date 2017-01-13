@@ -1,10 +1,8 @@
-from ColorArrayPrinter import ColorArrayPrinter
+from ColorArray.ColorArrayPrinter import ColorArrayPrinter
 
 
 class HtmlArrayPrinter(ColorArrayPrinter):
-    """
-    HTMLでお絵かきするためのクラス
-    """
+    """ HTMLでお絵かきするためのクラス """
 
     def __init__(self, filename):
         super().__init__()
@@ -34,9 +32,7 @@ class HtmlArrayPrinter(ColorArrayPrinter):
 
     @staticmethod
     def color_code_from_rgb(rgb):
-        """
-        色のRGB表記(R, G, B)をX11表記(#RGB)に直す
-        """
+        """ 色のRGB表記(R, G, B)を#RGBに直す """
         r_str = hex(rgb[0])[2:].rjust(2, '0')
         g_str = hex(rgb[1])[2:].rjust(2, '0')
         b_str = hex(rgb[2])[2:].rjust(2, '0')

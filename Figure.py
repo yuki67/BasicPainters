@@ -1,20 +1,16 @@
-from math import ceil, floor, pi, sin, cos
+from math import ceil, pi, sin, cos
 from itertools import chain
 
 
 def circular_points(center, r, n, color=lambda t: [0, 0, 0]):
-    """
-    円周上の点へのイテレータを返す
-    """
+    """ 円周上の点へのイテレータを返す """
     return (Point(r * cos(2 * pi * i / n) + center.x,
                   r * sin(2 * pi * i / n) + center.y,
                   color(i / n)) for i in range(n))
 
 
 class Point(object):
-    """
-    図形を扱うときの基本となる点
-    """
+    """ 図形を扱うときの基本となる点 """
 
     def __init__(self, x, y, rgb=None):
         """
@@ -29,11 +25,9 @@ class Point(object):
         self.rgb = rgb
 
     def interpolate(self, b, r):
-        """
-        selfとbをr:(1-r)に内分する点を返す(0<r<1)
-        r = 0 で self
-        r = 1 で b
-        """
+        """ selfとbをr:(1-r)に内分する点を返す(0<r<1) """
+        # r = 0 で self
+        # r = 1 で b
         x = (b.x - self.x) * r + self.x
         y = (b.y - self.y) * r + self.y
         rgb = [0, 0, 0]
@@ -45,16 +39,12 @@ class Point(object):
 
 
 class Figure(object):
-    """
-    図形の基底クラス
-    """
+    """ 図形の基底クラス """
     pass
 
 
 class Line(Figure):
-    """
-    線分
-    """
+    """ 線分 """
 
     def __init__(self, a, b):
         self.a = a
@@ -66,22 +56,18 @@ class Line(Figure):
 
 
 class Polygon(Figure):
-    """
-    多角形
-    """
+    """ 多角形 """
 
     def __init__(self, points):
         self.points = points
         self.stopper = len(points)
 
     def __iter__(self):
-        return chain(*(Line(self.points[i - 1], self.points[i]) for i in range(self.stopper)))
+        return (Line(self.points[i - 1], self.points[i]) for i in range(self.stopper))
 
 
 class Ellipse(Figure):
-    """
-    楕円
-    """
+    """ 楕円 """
 
     def __init__(self, center, a, b):
         # 全体の色はcenter.rgbで指定される
@@ -113,21 +99,17 @@ class Ellipse(Figure):
 
 
 class Circle(Ellipse):
-    """
-    円
-    """
+    """ 円 """
 
     def __init__(self, center, r):
         super().__init__(center, r, r)
 
 
 class Diamond(Figure):
-    """
-    ダイヤモンドパターン
-    """
+    """ ダイヤモンドパターン """
 
     def __init__(self, center, r, n, color=lambda t: [0, 0, 0]):
         self.circle = lambda: circular_points(center, r, n, color)
 
     def __iter__(self):
-        return chain(*(Line(p, q) for p in self.circle() for q in self.circle()))
+        return (Line(p, q) for p in self.circle() for q in self.circle())
