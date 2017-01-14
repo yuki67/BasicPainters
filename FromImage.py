@@ -10,7 +10,7 @@ from Painter.Figure import ColorArray
 from Painter.TkPainter import TkPainter
 
 
-def make_parser():
+def make_parser() -> argparse.ArgumentParser:
     """
     パーサーを作って、パーサーを返す。
     返り値に直接parse_arg()することが前提になっている。
@@ -23,15 +23,17 @@ def make_parser():
     return parser
 
 
-def setup_tk(width, height):
+def setup_tk(width: int, height: int) -> (tkinter.Tk, tkinter.Canvas):
     """ Tkのrootとcanvasを作って返す """
     root = tkinter.Tk()
     root.title("Tk Painter")
     root.geometry("%dx%d+%d+%d" % (width + 10, height + 10, 256, 0))
     canvas = tkinter.Canvas(root, width=width, height=height)
+    print(type(root), type(canvas))
     return root, canvas
 
-def prompt():
+
+def prompt() -> None:
     """ メイン処理 """
     args = make_parser().parse_args()
     array = ColorArray.from_image(args.filename, args.width)
@@ -42,9 +44,9 @@ def prompt():
     if not os.path.exists("images"):
         os.mkdir("images")
 
-    ExcelArrayPrinter(filename).print(array)
-    ShellArrayPrinter(filename).print(array)
-    HtmlArrayPrinter(filename).print(array)
+    # ExcelArrayPrinter(filename).print(array)
+    # ShellArrayPrinter(filename).print(array)
+    # HtmlArrayPrinter(filename).print(array)
 
     resize = ColorArray.resize(array, 100)
     HtmlArrayPrinter(filename + "_resize").print(resize)

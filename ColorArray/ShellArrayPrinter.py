@@ -1,26 +1,33 @@
+from typing import List
+
 from ColorArray.ColorArrayPrinter import ColorArrayPrinter
+from Painter.Figure import ColorArray, Point
 
 
 class ShellArrayPrinter(ColorArrayPrinter):
     """ シェルでお絵かきするためのクラス """
 
-    def __init__(self, filename):
+    def __init__(self, filename: str) -> None:
         super().__init__()
         self.filename = filename + ".sh"
         self.str = ""
 
-    def open(self, color_array):
+    def open(self, color_array: ColorArray) -> None:
+        """ 初期設定を行う """
         self.str += "#!/bin/bash\necho -e $'"
         return
 
-    def put_pixel(self, point):
+    def put_pixel(self, point: Point) -> None:
+        """ Pointを描画する """
         color_code = ShellArrayPrinter.color_code_from_rgb(point.rgb)
         self.str += "\\e[48;5;%dm  " % color_code
 
-    def new_line(self):
+    def new_line(self) -> None:
+        """ 行を改める """
         self.str += "\\e[48;5;231m\\n"
 
-    def close(self):
+    def close(self) -> None:
+        """ ファイルを閉じる """
         self.str += "\\e[m\\em"
         self.str += "\\e[m\\em'"
         file = open(self.filename, "w+")
@@ -28,7 +35,7 @@ class ShellArrayPrinter(ColorArrayPrinter):
         file.close()
 
     @staticmethod
-    def color_code_from_rgb(rgb):
+    def color_code_from_rgb(rgb: List[int]) -> int:
         """ rgbに対応するシェルのカラーコードを返す """
         r = ShellArrayPrinter.truncate(rgb[0])
         g = ShellArrayPrinter.truncate(rgb[1])
@@ -36,7 +43,7 @@ class ShellArrayPrinter(ColorArrayPrinter):
         return ShellArrayPrinter.Color_Pallet[(r, g, b)]
 
     @staticmethod
-    def truncate(val):
+    def truncate(val: int) -> int:
         """ valをPallet_Numsの一番近い値に潰す """
         if val < 155:
             if val < 120:
