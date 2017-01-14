@@ -74,10 +74,10 @@ class Ellipse(Figure):
         self.center = center
         self.a = a
         self.b = b
-        self.x_range = ceil((a**2 + b**2)**-0.5 * a ** 2)
-        self.y_range = ceil((a**2 + b**2)**-0.5 * b ** 2)
-        self.y = lambda x: b * (1 - (x / a)**2)**0.5
-        self.x = lambda y: a * (1 - (y / b)**2)**0.5
+        self.x_range = ceil((a ** 2 + b ** 2) ** -0.5 * a ** 2)
+        self.y_range = ceil((a ** 2 + b ** 2) ** -0.5 * b ** 2)
+        self.y = lambda x: b * (1 - (x / a) ** 2) ** 0.5
+        self.x = lambda y: a * (1 - (y / b) ** 2) ** 0.5
 
     def __iter__(self):
         return chain((Point(self.center.x + x,
@@ -113,3 +113,15 @@ class Diamond(Figure):
 
     def __iter__(self):
         return (Line(p, q) for p in self.circle() for q in self.circle())
+
+
+class ColorArray(Figure):
+    """ 色配列 """
+
+    def __init__(self, width, height):
+        """ [255, 255, 255](白)に初期化された横width, 縦heightの色配列を返す """
+        array = []
+        for _ in range(height):
+            array.append([])
+            for _ in range(width):
+                array[-1].append([255, 255, 255])

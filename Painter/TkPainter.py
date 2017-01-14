@@ -9,14 +9,15 @@ class TkPainter(Painter):
         # self.draw_functions[Line] = self.draw_line
 
     def draw_line(self, canvas, line):
-        canvas.create_line(
-            [line.a.x, line.a.y, line.b.x, line.b.y], fill="red")
+        canvas.create_line([line.a.x, line.a.y, line.b.x, line.b.y],
+                           fill="red")
 
     def put_pixel(self, canvas, point):
         x = point.x
         y = point.y
-        canvas.create_rectangle(x + 0.5, y + 0.5, x +
-                                1.5, y + 1.5, fill=self.x11_from_rgb(point.rgb),
+        canvas.create_rectangle(x + 0.5, y + 0.5,
+                                x + 1.5, y + 1.5,
+                                fill=self.x11_from_rgb(point.rgb),
                                 width=0)
 
     @staticmethod

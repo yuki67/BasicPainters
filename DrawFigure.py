@@ -31,10 +31,10 @@ def test_figure(canvas, painter, width, height):
     painter.draw(canvas, Circle(center, width / 4))
     center.rgb = [0, 0, 255]
     painter.draw(canvas, Ellipse(
-        center, width / 4, width / 2))
+            center, width / 4, width / 2))
     center.rgb = [255, 0, 0]
     painter.draw(canvas, Ellipse(
-        center, width / 2, width / 4))
+            center, width / 2, width / 4))
 
     # Diamond
     painter.draw(canvas,
@@ -42,7 +42,7 @@ def test_figure(canvas, painter, width, height):
                          width / 2, 16,
                          lambda t: [128 + 127 * sin(2 * pi * t),
                                     128 + 127 * cos(2 * pi * t),
-                                    128 + 127 * sin(2 * pi * t) * cos(2 * pi * t)]),)
+                                    128 + 127 * sin(2 * pi * t) * cos(2 * pi * t)]), )
 
 
 def draw_array_printer(array, filename):
@@ -80,5 +80,6 @@ def prompt():
     canvas.place(x=5, y=5)
     root.mainloop()
     print("program ended.")
+
 
 prompt()

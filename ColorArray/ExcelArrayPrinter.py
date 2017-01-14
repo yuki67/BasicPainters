@@ -1,4 +1,5 @@
 import openpyxl
+
 from ColorArray.ColorArrayPrinter import ColorArrayPrinter
 
 
@@ -16,18 +17,15 @@ class ExcelArrayPrinter(ColorArrayPrinter):
         self.file = openpyxl.Workbook()
         sheet = self.file.active
         for y in range(len(color_array)):
-            # 同じ名前の変数と関数がopenpyxlにある。遺憾だ!
-            # pylint: disable=maybe-no-member
             sheet.row_dimensions[y + 1].height = self.cell_size / 2
             for x in range(len(color_array[0])):
                 letter = openpyxl.utils.get_column_letter(x + 1)
                 sheet.column_dimensions[letter].width = self.cell_size / 11.07
-            # pylint: enable=maybe-no-member
 
     def put_pixel(self, rgb):
         key = openpyxl.utils.get_column_letter(self.x + 1) + str(self.y + 1)
         self.file.active[key].fill = openpyxl.styles.PatternFill(
-            patternType='solid', fgColor=self.x11_from_rgb(rgb))
+                patternType='solid', fgColor=self.x11_from_rgb(rgb))
         self.x += 1
 
     def new_line(self):

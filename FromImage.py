@@ -23,13 +23,13 @@ def make_parser():
 def prompt():
     """ メイン処理 """
     args = make_parser().parse_args()
-
     array = colorarray_load_image(args.filename, args.width)
 
-    filename = os.path.join(
-        "images", os.path.basename(args.filename).split(".")[0])
+    filename = os.path.join("images",
+                            os.path.basename(args.filename).split(".")[0])
     if not os.path.exists("images"):
         os.mkdir("images")
+
     ExcelArrayPrinter(filename).print(array)
     ShellArrayPrinter(filename).print(array)
     HtmlArrayPrinter(filename).print(array)
@@ -40,5 +40,6 @@ def prompt():
     ShellArrayPrinter(filename + "_resize").print(array)
 
     print("program ended.")
+
 
 prompt()

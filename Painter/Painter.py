@@ -2,7 +2,6 @@ from Painter.Figure import Point
 
 
 class Painter(object):
-
     def __init__(self):
         # draw_functionsで描画に使う関数を指定する
         # 何も指定しなければ、すべて点で描画される(遅い)
