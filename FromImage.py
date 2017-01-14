@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 import argparse
 import os
-from ColorArray.ColorArray import colorarray_load_image, colorarray_resize
+import tkinter
+
 from ColorArray.ExcelArrayPrinter import ExcelArrayPrinter
 from ColorArray.HtmlArrayPrinter import HtmlArrayPrinter
 from ColorArray.ShellArrayPrinter import ShellArrayPrinter
+from Painter.Figure import ColorArray
+from Painter.TkPainter import TkPainter
 
 
 def make_parser():
@@ -20,11 +23,20 @@ def make_parser():
     return parser
 
 
+def setup_tk(width, height):
+    """ Tkのrootとcanvasを作って返す """
+    root = tkinter.Tk()
+    root.title("Tk Painter")
+    root.geometry("%dx%d+%d+%d" % (width + 10, height + 10, 256, 0))
+    canvas = tkinter.Canvas(root, width=width, height=height)
+    return root, canvas
+
 def prompt():
     """ メイン処理 """
     args = make_parser().parse_args()
-    array = colorarray_load_image(args.filename, args.width)
+    array = ColorArray.from_image(args.filename, args.width)
 
+    # ArrayPrinter
     filename = os.path.join("images",
                             os.path.basename(args.filename).split(".")[0])
     if not os.path.exists("images"):
@@ -34,11 +46,16 @@ def prompt():
     ShellArrayPrinter(filename).print(array)
     HtmlArrayPrinter(filename).print(array)
 
-    array = colorarray_resize(array, 100)
-    HtmlArrayPrinter(filename + "_resize").print(array)
-    ExcelArrayPrinter(filename + "_resize").print(array)
-    ShellArrayPrinter(filename + "_resize").print(array)
+    resize = ColorArray.resize(array, 100)
+    HtmlArrayPrinter(filename + "_resize").print(resize)
+    ExcelArrayPrinter(filename + "_resize").print(resize)
+    ShellArrayPrinter(filename + "_resize").print(resize)
 
+    # TkPainter
+    root, canvas = setup_tk(len(array[0]), len(array))
+    TkPainter().draw(canvas, array)
+    canvas.place(x=5, y=5)
+    root.mainloop()
     print("program ended.")
 
 

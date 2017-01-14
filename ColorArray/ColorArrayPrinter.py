@@ -5,8 +5,8 @@ class ColorArrayPrinter(object):
         """ color_arrayを使って絵を描く """
         self.open(color_array)
         for x_array in color_array:
-            for rgb in x_array:
-                self.put_pixel(rgb)
+            for point in x_array:
+                self.put_pixel(point)
             self.new_line()
         self.close()
 

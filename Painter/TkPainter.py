@@ -13,10 +13,8 @@ class TkPainter(Painter):
                            fill="red")
 
     def put_pixel(self, canvas, point):
-        x = point.x
-        y = point.y
-        canvas.create_rectangle(x + 0.5, y + 0.5,
-                                x + 1.5, y + 1.5,
+        canvas.create_rectangle(point.x + 0.5, point.y + 0.5,
+                                point.x + 1.5, point.y + 1.5,
                                 fill=self.x11_from_rgb(point.rgb),
                                 width=0)
 

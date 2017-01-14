@@ -1,5 +1,5 @@
-from math import ceil, pi, sin, cos
 from itertools import chain
+from math import ceil, pi, sin, cos
 
 
 def circular_points(center, r, n, color=lambda t: [0, 0, 0]):
@@ -115,13 +115,56 @@ class Diamond(Figure):
         return (Line(p, q) for p in self.circle() for q in self.circle())
 
 
-class ColorArray(Figure):
+class ColorArray(Figure, list):
     """ 色配列 """
 
     def __init__(self, width, height):
         """ [255, 255, 255](白)に初期化された横width, 縦heightの色配列を返す """
         array = []
-        for _ in range(height):
-            array.append([])
-            for _ in range(width):
-                array[-1].append([255, 255, 255])
+        for y in range(height):
+            array.append(ColorArray(0, 0))
+            for x in range(width):
+                array[-1].append(Point(x, y, [255, 255, 255]))
+        super().__init__(array)
+
+    def resize(self, width):
+        """ 幅をwidthに縮小して返す """
+        return self.from_source(width,
+                                len(self[0]), len(self),
+                                lambda x, y: self[int(y)][int(x)].rgb)
+
+    @staticmethod
+    def from_image(filename, width):
+        """
+        画像から色配列を作って返す
+        widthは出来上がる色配列の幅
+        """
+        from PIL import Image
+
+        image = Image.open(filename)
+        w, h = image.size
+        return ColorArray.from_source(width, w, h,
+                                      lambda x, y: image.getpixel((int(x), int(y))))
+
+    @staticmethod
+    def from_source(width, source_width, source_height, sampler):
+        """
+        samplerを使って幅widthの色配列を作って返す
+        sampler: [0, source_width] * [0, source_height] -> RGB
+        """
+        height = width / source_width * source_height
+        diff_x = (source_width - 1) / (width - 1)
+        diff_y = (source_height - 1) / (height - 1)
+
+        y = n = 0
+        array = ColorArray(0, 0)
+        while y <= source_height:
+            x = m = 0
+            array.append(ColorArray(0, 0))
+            while x <= source_width:
+                array[-1].append(Point(m, n, list(sampler(x, y))))
+                x += diff_x
+                m += 1
+            y += diff_y
+            n += 1
+        return array

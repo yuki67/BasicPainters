@@ -10,8 +10,6 @@ class ExcelArrayPrinter(ColorArrayPrinter):
         super().__init__()
         self.cell_size = cell_size
         self.filename = filename + ".xlsx"
-        self.x = 0
-        self.y = 0
 
     def open(self, color_array):
         self.file = openpyxl.Workbook()
@@ -22,15 +20,13 @@ class ExcelArrayPrinter(ColorArrayPrinter):
                 letter = openpyxl.utils.get_column_letter(x + 1)
                 sheet.column_dimensions[letter].width = self.cell_size / 11.07
 
-    def put_pixel(self, rgb):
-        key = openpyxl.utils.get_column_letter(self.x + 1) + str(self.y + 1)
+    def put_pixel(self, point):
+        key = openpyxl.utils.get_column_letter(point.x + 1) + str(point.y + 1)
         self.file.active[key].fill = openpyxl.styles.PatternFill(
-                patternType='solid', fgColor=self.x11_from_rgb(rgb))
-        self.x += 1
+                patternType='solid', fgColor=self.x11_from_rgb(point.rgb))
 
     def new_line(self):
-        self.x = 0
-        self.y += 1
+        pass
 
     def close(self):
         self.file.save(filename=self.filename)

@@ -13,4 +13,4 @@ class ColorArrayPainter(Painter):
         (x, y)が領域の外だったら何もしない
         """
         if point.x > 0 and point.y > 0 and point.x < len(canvas[0]) and point.y < len(canvas):
-            canvas[int(point.y)][int(point.x)] = point.rgb
+            canvas[int(point.y)][int(point.x)].rgb = point.rgb

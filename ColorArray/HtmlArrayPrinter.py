@@ -17,9 +17,9 @@ class HtmlArrayPrinter(ColorArrayPrinter):
                     "<body><table width=\"10\" height=\"10\" border=\"0\" cellspacing=\"0\" >\n" + \
                     "<tr>\n"
 
-    def put_pixel(self, rgb):
+    def put_pixel(self, point):
         self.str += "<th bgcolor=\"%s\"/>" % \
-                    (self.color_code_from_rgb(rgb))
+                    (self.color_code_from_rgb(point.rgb))
 
     def new_line(self):
         self.str += "</tr>\n<tr>"

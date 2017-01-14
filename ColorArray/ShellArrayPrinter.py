@@ -13,8 +13,8 @@ class ShellArrayPrinter(ColorArrayPrinter):
         self.str += "#!/bin/bash\necho -e $'"
         return
 
-    def put_pixel(self, rgb):
-        color_code = ShellArrayPrinter.color_code_from_rgb(rgb)
+    def put_pixel(self, point):
+        color_code = ShellArrayPrinter.color_code_from_rgb(point.rgb)
         self.str += "\\e[48;5;%dm  " % color_code
 
     def new_line(self):
