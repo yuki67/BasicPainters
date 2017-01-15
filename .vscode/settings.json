@@ -6,6 +6,7 @@
     "python.linting.lintOnSave": true,
     "python.linting.pep8Enabled": false,
     "python.linting.pylintEnabled": true,
+    "python.linting.pylintPath": "C:/Users/iiyuk/Documents/virtualenv/defaultglobal/Scripts/pylint.exe",
     "python.linting.pylintArgs": [
         "--rcfile=.vscode/.pylintrc"
     ]
