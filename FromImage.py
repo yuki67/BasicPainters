@@ -29,7 +29,6 @@ def setup_tk(width: int, height: int) -> (tkinter.Tk, tkinter.Canvas):
     root.title("Tk Painter")
     root.geometry("%dx%d+%d+%d" % (width + 10, height + 10, 256, 0))
     canvas = tkinter.Canvas(root, width=width, height=height)
-    print(type(root), type(canvas))
     return root, canvas
 
 

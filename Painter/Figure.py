@@ -3,7 +3,14 @@ from math import ceil, pi, sin, cos
 from typing import List, Callable, Iterable
 
 
-class Point(object):
+class Figure(object):
+    """ 図形の基底クラス """
+
+    def __iter__(self) -> Iterable:
+        pass
+
+
+class Point(Figure):
     """ 図形を扱うときの基本となる点 """
 
     def __init__(self, x: float, y: float, rgb: List[int] = None) -> None:
@@ -30,13 +37,6 @@ class Point(object):
             rgb[1] = (b.rgb[1] - self.rgb[1]) * r + self.rgb[1]
             rgb[2] = (b.rgb[2] - self.rgb[2]) * r + self.rgb[2]
         return Point(x, y, rgb)
-
-
-class Figure(object):
-    """ 図形の基底クラス """
-
-    def __iter__(self) -> Iterable:
-        pass
 
 
 class Line(Figure):
@@ -126,6 +126,9 @@ class ColorArray(Figure, list):
             for x in range(width):
                 array[-1].append(Point(x, y, [255, 255, 255]))
         super().__init__(array)
+
+    def __iter__(self) -> Iterable[Iterable[Point]]:
+        return list.__iter__(self)
 
     def resize(self, width: int):
         """ 幅をwidthに縮小して返す """
