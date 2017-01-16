@@ -1,7 +1,7 @@
 
 # PaintBasics
 
-A basic class for painting program in python.
+A base class for painting program in python.
 
 pythonで絵を描くプログラムのための基底クラスです。
 
