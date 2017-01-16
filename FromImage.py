@@ -35,7 +35,7 @@ def setup_tk(width: int, height: int) -> (tkinter.Tk, tkinter.Canvas):
 def prompt() -> None:
     """ メイン処理 """
     args = make_parser().parse_args()
-    array = ColorArray.from_image(args.filename, args.width)
+    array = ColorArray.from_image(args.filename, int(args.width))
 
     # ArrayPrinter
     filename = os.path.join("images",
@@ -43,9 +43,9 @@ def prompt() -> None:
     if not os.path.exists("images"):
         os.mkdir("images")
 
-    # ExcelArrayPrinter(filename).print(array)
-    # ShellArrayPrinter(filename).print(array)
-    # HtmlArrayPrinter(filename).print(array)
+    ExcelArrayPrinter(filename).print(array)
+    ShellArrayPrinter(filename).print(array)
+    HtmlArrayPrinter(filename).print(array)
 
     resize = ColorArray.resize(array, 100)
     HtmlArrayPrinter(filename + "_resize").print(resize)

@@ -13,10 +13,8 @@ class Figure(object):
 class Point(Figure):
     """ 図形を扱うときの基本となる点 """
 
-    def __init__(self, x: float, y: float, rgb: List[int] = None) -> None:
-        """
-        座標が(x,y)で色がrgbの点を返す
-        """
+    def __init__(self, x: float, y: float, rgb: List[int]=None) -> None:
+        """ 座標が(x,y)で色がrgbの点を返す """
         self.x = x
         self.y = y
         if rgb is not None:
@@ -108,7 +106,7 @@ class Diamond(Figure):
                  center: Point,
                  r: float,
                  n: int,
-                 color: Callable[[float], List[int]] = lambda t: [0, 0, 0]) -> None:
+                 color: Callable[[float], List[int]]=lambda t: [0, 0, 0]) -> None:
         self.circle = lambda: circular_points(center, r, n, color)
 
     def __iter__(self) -> Iterable(Line):
@@ -176,8 +174,7 @@ class ColorArray(Figure, list):
 def circular_points(center: Point,
                     r: float,
                     n: int,
-                    color: Callable[[float], List[int]]
-                    = lambda t: [0, 0, 0]) -> Iterable[Point]:
+                    color: Callable[[float], List[int]]=lambda t: [0, 0, 0]) -> Iterable[Point]:
     """ 円周上の点へのイテレータを返す """
     return (Point(r * cos(2 * pi * i / n) + center.x,
                   r * sin(2 * pi * i / n) + center.y,
