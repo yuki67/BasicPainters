@@ -5,7 +5,6 @@ __pycache__
 *.jpg
 *.xlsx
 *.sh
-*.png
 *.html
 *.gif
 .DS_Store
