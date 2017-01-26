@@ -4,6 +4,9 @@ from math import cos, pi, sin
 from tkinter import Tk, Canvas
 from typing import Union
 
+from PIL import Image
+from Painter.JPGPainter import JPGPainter
+
 from ColorArray.ExcelArrayPrinter import ExcelArrayPrinter
 from ColorArray.HtmlArrayPrinter import HtmlArrayPrinter
 from ColorArray.ShellArrayPrinter import ShellArrayPrinter
@@ -13,7 +16,7 @@ from Painter.Painter import Painter
 from Painter.TkPainter import TkPainter
 
 
-def test_figure(canvas: Union[Canvas, ColorArray],
+def test_figure(canvas: Union[Image.Image, Canvas, ColorArray],
                 painter: Painter,
                 width: int,
                 height: int) -> None:
@@ -65,15 +68,20 @@ def setup_tk(width: int, height: int) -> (Tk, Canvas):
 
 def prompt() -> None:
     """ 対話処理など """
+    if not os.path.exists("figures"):
+        os.mkdir("figures")
 
     # ArrayPainter
     width, height = 100, 100
     canvas = ColorArray(width, height)
     test_figure(canvas, ColorArrayPainter(), width, height)
-
-    if not os.path.exists("figures"):
-        os.mkdir("figures")
     draw_array_printer(canvas, os.path.join("figures", "figure"))
+
+    # JPGPainter
+    width, height = 512, 512
+    img = Image.new("RGB", (width, height), "white")
+    test_figure(img, JPGPainter(), width, height)
+    img.save(os.path.join("figures", "figure.jpg"))
 
     # TkPainter
     width, height = 512, 512
@@ -81,6 +89,7 @@ def prompt() -> None:
     test_figure(canvas, TkPainter(), width, height)
     canvas.place(x=5, y=5)
     root.mainloop()
+
     print("program ended.")
 
 

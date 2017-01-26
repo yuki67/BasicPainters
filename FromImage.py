@@ -2,12 +2,14 @@
 import argparse
 import os
 import tkinter
+from PIL import Image
 
 from ColorArray.ExcelArrayPrinter import ExcelArrayPrinter
 from ColorArray.HtmlArrayPrinter import HtmlArrayPrinter
 from ColorArray.ShellArrayPrinter import ShellArrayPrinter
 from Painter.Figure import ColorArray
 from Painter.TkPainter import TkPainter
+from Painter.JPGPainter import JPGPainter
 
 
 def make_parser() -> argparse.ArgumentParser:
@@ -36,13 +38,12 @@ def prompt() -> None:
     """ メイン処理 """
     args = make_parser().parse_args()
     array = ColorArray.from_image(args.filename, int(args.width))
-
-    # ArrayPrinter
     filename = os.path.join("images",
                             os.path.basename(args.filename).split(".")[0])
     if not os.path.exists("images"):
         os.mkdir("images")
 
+    # ArrayPrinter
     ExcelArrayPrinter(filename).print(array)
     ShellArrayPrinter(filename).print(array)
     HtmlArrayPrinter(filename).print(array)
@@ -51,6 +52,11 @@ def prompt() -> None:
     HtmlArrayPrinter(filename + "_resize").print(resize)
     ExcelArrayPrinter(filename + "_resize").print(resize)
     ShellArrayPrinter(filename + "_resize").print(resize)
+
+    # JPGPainter
+    img = Image.new("RGB", (len(array[0]), len(array)), "white")
+    JPGPainter().draw(img, array)
+    img.save(filename + ".jpg")
 
     # TkPainter
     root, canvas = setup_tk(len(array[0]), len(array))
