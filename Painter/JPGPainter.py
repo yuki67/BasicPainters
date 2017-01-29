@@ -12,5 +12,6 @@ class JPGPainter(Painter):
 
     def put_pixel(self, canvas: Image, point: Point) -> None:
         """ canvasにpointを描画する """
-        if 0 < point.x < canvas.width and 0 < point.y < canvas.height:
-            canvas.putpixel((int(point.x), int(point.y)), tuple(point.rgb))
+        if 0 <= point.x < canvas.width and 0 <= point.y < canvas.height:
+            canvas.putpixel((int(point.x), int(point.y)),
+                            tuple(point.rgb))
