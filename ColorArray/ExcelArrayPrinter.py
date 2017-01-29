@@ -9,7 +9,7 @@ from Painter.Figure import ColorArray, Point
 class ExcelArrayPrinter(ColorArrayPrinter):
     """ エクセルでお絵かきするためのクラス """
 
-    def __init__(self, filename: str, cell_size: int = 10) -> None:
+    def __init__(self, filename: str, cell_size: int=10) -> None:
         super().__init__()
         self.cell_size = cell_size
         self.filename = filename + ".xlsx"
@@ -20,16 +20,18 @@ class ExcelArrayPrinter(ColorArrayPrinter):
         self.file = openpyxl.Workbook()
         sheet = self.file.active
         for y in range(len(color_array)):
+            # pylint: disable=maybe-no-member
             sheet.row_dimensions[y + 1].height = self.cell_size / 2
             for x in range(len(color_array[0])):
                 letter = openpyxl.utils.get_column_letter(x + 1)
                 sheet.column_dimensions[letter].width = self.cell_size / 11.07
+            # pylint: enable=maybe-no-member
 
     def put_pixel(self, point: Point) -> None:
         """ pointを描画する """
         key = openpyxl.utils.get_column_letter(point.x + 1) + str(point.y + 1)
         self.file.active[key].fill = openpyxl.styles.PatternFill(
-                patternType='solid', fgColor=self.x11_from_rgb(point.rgb))
+            patternType='solid', fgColor=self.x11_from_rgb(point.rgb))
 
     def new_line(self) -> None:
         """ 行を改める """

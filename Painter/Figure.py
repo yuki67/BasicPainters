@@ -106,7 +106,8 @@ class Diamond(Figure):
                  center: Point,
                  r: float,
                  n: int,
-                 color: Callable[[float], List[int]]=lambda t: [0, 0, 0]) -> None:
+                 color: Callable[[float], List[int]]=lambda t: [0, 0, 0]
+                 ) -> None:
         self.circle = lambda: circular_points(center, r, n, color)
 
     def __iter__(self) -> Iterable(Line):
@@ -174,7 +175,8 @@ class ColorArray(Figure, list):
 def circular_points(center: Point,
                     r: float,
                     n: int,
-                    color: Callable[[float], List[int]]=lambda t: [0, 0, 0]) -> Iterable[Point]:
+                    color: Callable[[float], List[int]]=lambda t: [0, 0, 0]
+                    ) -> Iterable[Point]:
     """ 円周上の点へのイテレータを返す """
     return (Point(r * cos(2 * pi * i / n) + center.x,
                   r * sin(2 * pi * i / n) + center.y,
