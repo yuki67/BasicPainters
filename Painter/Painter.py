@@ -17,8 +17,8 @@ class Painter(object):
 
     def draw(self, canvas, figure: Figure) -> None:
         """ canvasにfigureを描く """
-        try:
+        if self.draw_functions.get(type(figure)):
             self.draw_functions[type(figure)](canvas, figure)
-        except KeyError:
+        else:
             for p in figure:
                 self.draw(canvas, p)
