@@ -7,22 +7,24 @@ from Painter.Painter import Painter
 
 class TkPainter(Painter):
     """ TkinterのCanvas用のPainter """
+    # Canvasの座標系は1始まりなので、例えばLine([1, 1], [1, 100])が表示されないことに注意
 
-    def __init__(self) -> None:
+    def __init__(self, canvas: Canvas) -> None:
         super().__init__()
+        self.canvas = canvas
         self.draw_functions[Line] = self.draw_line
 
-    def draw_line(self, canvas: Canvas, line: Line) -> None:
+    def draw_line(self, line: Line) -> None:
         """ canvasにlineを描画する """
-        canvas.create_line([line.a.x, line.a.y, line.b.x, line.b.y],
-                           fill="red")
+        self.canvas.create_line([line.a.x + 1, line.a.y + 1, line.b.x + 1, line.b.y + 1],
+                                fill="red")
 
-    def put_pixel(self, canvas: Canvas, point: Point) -> None:
+    def put_pixel(self, point: Point) -> None:
         """ canvasにpointを描画する """
-        canvas.create_rectangle(point.x + 0.5, point.y + 0.5,
-                                point.x + 1.5, point.y + 1.5,
-                                fill=self.x11_from_rgb(point.rgb),
-                                width=0)
+        self.canvas.create_rectangle(point.x + 0.5, point.y + 0.5,
+                                     point.x + 1.5, point.y + 1.5,
+                                     fill=self.x11_from_rgb(point.rgb),
+                                     width=0)
 
     @staticmethod
     def x11_from_rgb(rgb: List[int]) -> str:

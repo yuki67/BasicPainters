@@ -11,14 +11,14 @@ class Painter(object):
             Point: self.put_pixel
         }
 
-    def put_pixel(self, canvas, point: Point) -> None:
+    def put_pixel(self, point: Point) -> None:
         """ canvasにpointを描画する """
         assert False, "Override me!"
 
-    def draw(self, canvas, figure: Figure) -> None:
+    def draw(self, figure: Figure) -> None:
         """ canvasにfigureを描く """
         if self.draw_functions.get(type(figure)):
-            self.draw_functions[type(figure)](canvas, figure)
+            self.draw_functions[type(figure)](figure)
         else:
             for p in figure:
-                self.draw(canvas, p)
+                self.draw(p)

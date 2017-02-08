@@ -58,12 +58,12 @@ def prompt() -> None:
 
     # JPGPainter
     img = Image.new("RGB", (len(array[0]), len(array)), "white")
-    JPGPainter().draw(img, array)
+    JPGPainter(img).draw(array)
     img.save(filename + ".jpg")
 
     # TkPainter
     root, canvas = setup_tk(len(array[0]), len(array))
-    TkPainter().draw(canvas, array)
+    TkPainter(canvas).draw(array)
     canvas.place(x=5, y=5)
     root.mainloop()
     print("program ended.")
