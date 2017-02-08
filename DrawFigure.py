@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
+""" 図形を描くデモ """
 import os
 from math import cos, pi, sin
 from tkinter import Tk, Canvas
 from typing import Union
-
 from PIL import Image
-from Painter.JPGPainter import JPGPainter
 
 from ColorArray.ExcelArrayPrinter import ExcelArrayPrinter
 from ColorArray.HtmlArrayPrinter import HtmlArrayPrinter
@@ -14,13 +13,14 @@ from Painter.ColorArrayPainter import ColorArrayPainter
 from Painter.Figure import Circle, Diamond, Ellipse, Line, Point, Polygon, ColorArray
 from Painter.Painter import Painter
 from Painter.TkPainter import TkPainter
+from Painter.JPGPainter import JPGPainter
 
 
 def test_figure(canvas: Union[Image.Image, Canvas, ColorArray],
                 painter: Painter,
                 width: int,
                 height: int) -> None:
-    """ 図形描画のテスト """
+    """ (width, height)のcanvasにpainterで図形描画 """
     p = [Point(1, 1, [0, 0, 0]),
          Point(width - 1, 1, [255, 255, 0]),
          Point(width - 1,
@@ -50,7 +50,7 @@ def test_figure(canvas: Union[Image.Image, Canvas, ColorArray],
                                     128 + 127 * sin(2 * pi * t) * cos(2 * pi * t)]))
 
 
-def draw_array_printer(array: ColorArray, filename: str) -> None:
+def print_array(array: ColorArray, filename: str) -> None:
     """ arrayPainterを使ってarrayを描く """
     ExcelArrayPrinter(filename).print(array)
     ShellArrayPrinter(filename).print(array)
@@ -75,7 +75,7 @@ def prompt() -> None:
     width, height = 100, 100
     canvas = ColorArray(width, height)
     test_figure(canvas, ColorArrayPainter(), width, height)
-    draw_array_printer(canvas, os.path.join("figures", "figure"))
+    print_array(canvas, os.path.join("figures", "figure"))
 
     # JPGPainter
     width, height = 512, 512
@@ -92,5 +92,5 @@ def prompt() -> None:
 
     print("program ended.")
 
-
-prompt()
+if __name__ == "__main__":
+    prompt()

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" 画像描画のデモ """
 import argparse
 import os
 import tkinter
@@ -25,6 +26,13 @@ def make_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def print_array(array: ColorArray, filename: str) -> None:
+    """ arrayPainterを使ってarrayを描く """
+    ExcelArrayPrinter(filename).print(array)
+    ShellArrayPrinter(filename).print(array)
+    HtmlArrayPrinter(filename).print(array)
+
+
 def setup_tk(width: int, height: int) -> (tkinter.Tk, tkinter.Canvas):
     """ Tkのrootとcanvasを作って返す """
     root = tkinter.Tk()
@@ -44,14 +52,9 @@ def prompt() -> None:
         os.mkdir("images")
 
     # ArrayPrinter
-    ExcelArrayPrinter(filename).print(array)
-    ShellArrayPrinter(filename).print(array)
-    HtmlArrayPrinter(filename).print(array)
-
+    print_array(array, filename)
     resize = ColorArray.resize(array, 100)
-    HtmlArrayPrinter(filename + "_resize").print(resize)
-    ExcelArrayPrinter(filename + "_resize").print(resize)
-    ShellArrayPrinter(filename + "_resize").print(resize)
+    print_array(resize, filename + "_resize")
 
     # JPGPainter
     img = Image.new("RGB", (len(array[0]), len(array)), "white")
@@ -65,5 +68,5 @@ def prompt() -> None:
     root.mainloop()
     print("program ended.")
 
-
-prompt()
+if __name__ == "__main__":
+    prompt()
