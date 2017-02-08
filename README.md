@@ -9,6 +9,7 @@ pythonで絵を描くプログラムのための基底クラスです。
 
 ![](excel.png)
 
+![](nyan.png)
 
 ## Demo
 
