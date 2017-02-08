@@ -23,6 +23,9 @@ class Point(Figure):
             rgb[2] = int(rgb[2])
         self.rgb = rgb
 
+    def __repr__(self):
+        return "Point(%s, %s, %s)" % (self.x, self.y, self.rgb)
+
     def interpolate(self, b, r: float):
         """ selfとbをr:(1-r)に内分する点を返す(0<r<1) """
         # r = 0 で self
@@ -45,8 +48,14 @@ class Line(Figure):
         self.b = b
         self.stopper = max(abs(self.a.x - self.b.x), abs(self.a.y - self.b.y))
 
+    def __repr__(self):
+        return "Line(%s, %s)" % (self.a.__repr__(), self.b.__repr__())
+
     def __iter__(self) -> Iterable[Point]:
-        return (Point.interpolate(self.a, self.b, i / self.stopper) for i in range(int(self.stopper) + 1))
+        if self.stopper == 0:
+            return (i for i in range(0))
+        else:
+            return (Point.interpolate(self.a, self.b, i / self.stopper) for i in range(int(self.stopper) + 1))
 
 
 class Polygon(Figure):
