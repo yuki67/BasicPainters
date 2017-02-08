@@ -46,7 +46,7 @@ class Line(Figure):
         self.stopper = max(abs(self.a.x - self.b.x), abs(self.a.y - self.b.y))
 
     def __iter__(self) -> Iterable[Point]:
-        return (Point.interpolate(self.a, self.b, i / self.stopper) for i in range(int(self.stopper)))
+        return (Point.interpolate(self.a, self.b, i / self.stopper) for i in range(int(self.stopper) + 1))
 
 
 class Polygon(Figure):
