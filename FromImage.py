@@ -3,14 +3,15 @@
 import argparse
 import os
 import tkinter
+
 from PIL import Image
 
 from ColorArray.ExcelArrayPrinter import ExcelArrayPrinter
 from ColorArray.HtmlArrayPrinter import HtmlArrayPrinter
 from ColorArray.ShellArrayPrinter import ShellArrayPrinter
-from Painter.Figure import ColorArray
-from Painter.TkPainter import TkPainter
+from Figure.Figure import ColorArray
 from Painter.JPGPainter import JPGPainter
+from Painter.TkPainter import TkPainter
 
 
 def make_parser() -> argparse.ArgumentParser:
@@ -46,10 +47,11 @@ def prompt() -> None:
     """ メイン処理 """
     args = make_parser().parse_args()
     array = ColorArray.from_image(args.filename, int(args.width))
-    filename = os.path.join("images",
+    foldername = "generated_files"
+    filename = os.path.join(foldername,
                             os.path.basename(args.filename).split(".")[0])
-    if not os.path.exists("images"):
-        os.mkdir("images")
+    if not os.path.exists(foldername):
+        os.mkdir(foldername)
 
     # ArrayPrinter
     print_array(array, filename)

@@ -3,17 +3,17 @@
 import os
 from math import cos, pi, sin
 from tkinter import Tk, Canvas
-from typing import Union
+
 from PIL import Image
 
 from ColorArray.ExcelArrayPrinter import ExcelArrayPrinter
 from ColorArray.HtmlArrayPrinter import HtmlArrayPrinter
 from ColorArray.ShellArrayPrinter import ShellArrayPrinter
+from Figure.Figure import Circle, Diamond, Ellipse, Line, Point, Polygon, ColorArray
 from Painter.ColorArrayPainter import ColorArrayPainter
-from Painter.Figure import Circle, Diamond, Ellipse, Line, Point, Polygon, ColorArray
+from Painter.JPGPainter import JPGPainter
 from Painter.Painter import Painter
 from Painter.TkPainter import TkPainter
-from Painter.JPGPainter import JPGPainter
 
 
 def test_figure(painter: Painter,
@@ -66,20 +66,21 @@ def setup_tk(width: int, height: int) -> (Tk, Canvas):
 
 def prompt() -> None:
     """ 対話処理など """
-    if not os.path.exists("figures"):
-        os.mkdir("figures")
+    foldername = "generated_files"
+    if not os.path.exists(foldername):
+        os.mkdir(foldername)
 
     # ArrayPainter
     width, height = 100, 100
     canvas = ColorArray(width, height)
     test_figure(ColorArrayPainter(canvas), width, height)
-    print_array(canvas, os.path.join("figures", "figure"))
+    print_array(canvas, os.path.join(foldername, "figure"))
 
     # JPGPainter
     width, height = 512, 512
     img = Image.new("RGB", (width, height), "white")
     test_figure(JPGPainter(img), width, height)
-    img.save(os.path.join("figures", "figure.jpg"))
+    img.save(os.path.join(foldername, "figure.jpg"))
 
     # TkPainter
     width, height = 512, 512

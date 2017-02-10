@@ -1,4 +1,4 @@
-from Painter.Figure import ColorArray, Point
+from Figure.Figure import ColorArray, Point
 
 
 class ColorArrayPrinter(object):

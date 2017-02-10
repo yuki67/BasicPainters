@@ -1,7 +1,7 @@
 from tkinter import Canvas
 from typing import List
 
-from Painter.Figure import Line, Point
+from Figure.Figure import Line, Point
 from Painter.Painter import Painter
 
 

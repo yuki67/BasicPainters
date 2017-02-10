@@ -1,4 +1,4 @@
-from Painter.Figure import Point, ColorArray
+from Figure.Figure import Point, ColorArray
 from Painter.Painter import Painter
 
 

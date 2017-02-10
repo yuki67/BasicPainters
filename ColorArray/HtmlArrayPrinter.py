@@ -1,7 +1,7 @@
 from typing import List
 
 from ColorArray.ColorArrayPrinter import ColorArrayPrinter
-from Painter.Figure import ColorArray, Point
+from Figure.Figure import ColorArray, Point
 
 
 class HtmlArrayPrinter(ColorArrayPrinter):

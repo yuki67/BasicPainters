@@ -1,4 +1,4 @@
-from Painter.Figure import Point, Figure
+from Figure.Figure import Point, Figure
 
 
 class Painter(object):

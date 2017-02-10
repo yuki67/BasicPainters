@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw
 
-from Painter.Figure import Point
+from Figure.Figure import Point
 from Painter.Painter import Painter
 
 
